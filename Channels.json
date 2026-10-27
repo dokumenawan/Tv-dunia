@@ -41,6 +41,106 @@
       "streamUrl": "https://mncmedia.malingtv.workers.dev/gtv.m3u8",
       "sourceUrl": "",
       "enabled": true
+    },
+    {
+      "id": "kompas-tv",
+      "name": "Kompas TV",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Kompas_TV_logo.svg",
+      "streamUrl": "https://livestream.kompas.tv/live/kompastv.m3u8",
+      "sourceUrl": "https://www.kompas.tv/",
+      "enabled": true
+    },
+    {
+      "id": "metro-tv",
+      "name": "Metro TV",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/2/2e/MetroTV_Logo.svg",
+      "streamUrl": "https://edge.metrotvnews.com/live-edge/smil:metrotv.smil/playlist.m3u8",
+      "sourceUrl": "https://www.metrotvnews.com/",
+      "enabled": true
+    },
+    {
+      "id": "cnbc-indonesia",
+      "name": "CNBC Indonesia",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/6/6a/CNBC_Indonesia_logo.svg",
+      "streamUrl": "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil/playlist.m3u8",
+      "sourceUrl": "https://www.cnbcindonesia.com/",
+      "enabled": true
+    },
+    {
+      "id": "tvku",
+      "name": "TVKU",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "",
+      "streamUrl": "https://tvku.tv/hlsstream/hls/live.m3u8",
+      "sourceUrl": "https://tvku.tv/",
+      "enabled": true
+    },
+    {
+      "id": "cnn-indonesia",
+      "name": "CNN Indonesia",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/CNN%20Indonesia%20logo%20%282023%29.svg",
+      "streamUrl": "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil/playlist.m3u8",
+      "sourceUrl": "https://www.cnnindonesia.com/",
+      "enabled": true
+    },
+    {
+      "id": "tvone-nasional",
+      "name": "TV One",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "",
+      "streamUrl": "https://cdn-tvtvone.transvision.co.id/Content/HLS/Live/Channel(TVOne)/index.m3u8",
+      "sourceUrl": "https://www.tvonenews.com/",
+      "enabled": true
+    },
+    {
+      "id": "antara-tv",
+      "name": "ANTARA TV",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Logo%20Antara%20TV.png",
+      "streamUrl": "https://live.antara.tv/hls/antaratv.m3u8",
+      "sourceUrl": "https://www.antaranews.com/",
+      "enabled": true
+    },
+    {
+      "id": "inews-nasional",
+      "name": "iNews",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "",
+      "streamUrl": "https://cdn.inews.id/live/inews.m3u8",
+      "sourceUrl": "https://www.inews.id/",
+      "enabled": true
+    },
+    {
+      "id": "u-channel",
+      "name": "U Channel",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "https://commons.wikimedia.org/wiki/Special:Redirect/file/U-Channel_id.png",
+      "streamUrl": "https://srs.u-channel.tv/live/uchannel-tv.m3u8",
+      "sourceUrl": "https://www.u-channel.tv/",
+      "enabled": true
+    },
+    {
+      "id": "jtv-surabaya",
+      "name": "JTV Surabaya",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "",
+      "streamUrl": "http://122.248.43.242:1935/JTVSURABAYA/_definst_/myStream/playlist.m3u8",
+      "sourceUrl": "https://jtv.co.id/",
+      "enabled": true
     }
   ]
 }
