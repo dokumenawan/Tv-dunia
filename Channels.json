@@ -7,119 +7,19 @@
       "name": "TVRI",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/44/TVRI_Nasional_2019.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/44/TVRI_Nasional_2019.svg",
       "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
       "sourceUrl": "https://klik.tvri.go.id/",
       "enabled": true
     },
     {
-      "id": "rcti-nasional",
-      "name": "RCTI",
-      "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/dd/RCTI_logo_2015.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
-      "streamUrl": "http://edge.nim.mivo.tv/kqcsmbqna6yg/rcti2_all/playlist.m3u8",
-      "sourceUrl": "",
-      "enabled": true
-    },
-    {
       "id": "nusantaratv-nasional",
-      "name": "NusantaraTV",
+      "name": "Nusantara TV",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Nusantara_TV_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Nusantara_TV_Logo.svg",
       "streamUrl": "https://nusantaratv.siar.us/nusantaratv/live/playlist.m3u8",
-      "sourceUrl": "",
-      "enabled": true
-    },
-    {
-      "id": "gtv-nasional",
-      "name": "GTV",
-      "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/9/9c/GTV_%282017%29.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
-      "streamUrl": "https://mncmedia.malingtv.workers.dev/gtv.m3u8",
-      "sourceUrl": "",
-      "enabled": true
-    },
-    {
-      "id": "kompas-tv",
-      "name": "Kompas TV",
-      "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Kompas_TV_logo.svg",
-      "streamUrl": "https://livestream.kompas.tv/live/kompastv.m3u8",
-      "sourceUrl": "https://www.kompas.tv/",
-      "enabled": true
-    },
-    {
-      "id": "metro-tv",
-      "name": "Metro TV",
-      "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/2/2e/MetroTV_Logo.svg",
-      "streamUrl": "https://edge.metrotvnews.com/live-edge/smil:metrotv.smil/playlist.m3u8",
-      "sourceUrl": "https://www.metrotvnews.com/",
-      "enabled": true
-    },
-    {
-      "id": "cnbc-indonesia",
-      "name": "CNBC Indonesia",
-      "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/6/6a/CNBC_Indonesia_logo.svg",
-      "streamUrl": "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil/playlist.m3u8",
-      "sourceUrl": "https://www.cnbcindonesia.com/",
-      "enabled": true
-    },
-    {
-      "id": "tvku",
-      "name": "TVKU",
-      "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "",
-      "streamUrl": "https://tvku.tv/hlsstream/hls/live.m3u8",
-      "sourceUrl": "https://tvku.tv/",
-      "enabled": true
-    },
-    {
-      "id": "cnn-indonesia",
-      "name": "CNN Indonesia",
-      "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/CNN%20Indonesia%20logo%20%282023%29.svg",
-      "streamUrl": "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil/playlist.m3u8",
-      "sourceUrl": "https://www.cnnindonesia.com/",
-      "enabled": true
-    },
-    {
-      "id": "tvone-nasional",
-      "name": "TV One",
-      "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "",
-      "streamUrl": "https://cdn-tvtvone.transvision.co.id/Content/HLS/Live/Channel(TVOne)/index.m3u8",
-      "sourceUrl": "https://www.tvonenews.com/",
-      "enabled": true
-    },
-    {
-      "id": "antara-tv",
-      "name": "ANTARA TV",
-      "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Logo%20Antara%20TV.png",
-      "streamUrl": "https://live.antara.tv/hls/antaratv.m3u8",
-      "sourceUrl": "https://www.antaranews.com/",
-      "enabled": true
-    },
-    {
-      "id": "inews-nasional",
-      "name": "iNews",
-      "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "",
-      "streamUrl": "https://cdn.inews.id/live/inews.m3u8",
-      "sourceUrl": "https://www.inews.id/",
+      "sourceUrl": "https://www.nusantaratv.com/",
       "enabled": true
     },
     {
@@ -127,19 +27,109 @@
       "name": "U Channel",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "https://commons.wikimedia.org/wiki/Special:Redirect/file/U-Channel_id.png",
+      "logo": "",
       "streamUrl": "https://srs.u-channel.tv/live/uchannel-tv.m3u8",
       "sourceUrl": "https://www.u-channel.tv/",
       "enabled": true
     },
     {
-      "id": "jtv-surabaya",
-      "name": "JTV Surabaya",
+      "id": "garuda-tv",
+      "name": "Garuda TV",
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "",
-      "streamUrl": "http://122.248.43.242:1935/JTVSURABAYA/_definst_/myStream/playlist.m3u8",
-      "sourceUrl": "https://jtv.co.id/",
+      "streamUrl": "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
+      "sourceUrl": "https://garuda.tv/",
+      "enabled": true
+    },
+    {
+      "id": "metro-tv",
+      "name": "Metro TV",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "",
+      "streamUrl": "https://edge.medcom.id/live-edge/smil:metro.smil/playlist.m3u8",
+      "sourceUrl": "https://www.metrotvnews.com/",
+      "enabled": true
+    },
+    {
+      "id": "magna-channel",
+      "name": "Magna Channel",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "",
+      "streamUrl": "https://edge.medcom.id/live-edge/smil:magna.smil/playlist.m3u8",
+      "sourceUrl": "https://www.medcom.id/",
+      "enabled": true
+    },
+    {
+      "id": "mdtv",
+      "name": "MDTV",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "",
+      "streamUrl": "https://wahyu1ptv.pages.dev/MDTV-HD.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "jambi-tv",
+      "name": "Jambi TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://jambitv.globaldigitalcore.com/hls/sah5tu7Eiveepohyieyie3OoteL2anga.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "lingkar-tv",
+      "name": "Lingkar TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://lingkartv.my.id/hls/lingkartv.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "jogja-istimewa-tv",
+      "name": "Jogja Istimewa TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://stream.jogjatv.co.id/jtvlive/stream/index.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "radar-lampung-tv",
+      "name": "Radar Lampung TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://www.streaming.radartv.co.id/hls/test.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "salira-tv",
+      "name": "Salira TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://live.salira.tv/p/3870/hybrid/play.m3u8",
+      "sourceUrl": "https://live.salira.tv/",
+      "enabled": true
+    },
+    {
+      "id": "rinjani-tv",
+      "name": "Rinjani TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://rinjanitv.cloud/hls/tvkabel.m3u8",
+      "sourceUrl": "",
       "enabled": true
     }
   ]
