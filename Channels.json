@@ -7,7 +7,7 @@
       "name": "TVRI",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "https://share.google/b6Nb807lgs2AomAxg",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/44/TVRI_Nasional_2019.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
       "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
       "sourceUrl": "https://klik.tvri.go.id/",
       "enabled": true
@@ -17,7 +17,7 @@
       "name": "RCTI",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/dd/RCTI_logo_2015.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
       "streamUrl": "http://edge.nim.mivo.tv/kqcsmbqna6yg/rcti2_all/playlist.m3u8",
       "sourceUrl": "",
       "enabled": true
@@ -27,7 +27,7 @@
       "name": "NusantaraTV",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Nusantara_TV_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
       "streamUrl": "https://nusantaratv.siar.us/nusantaratv/live/playlist.m3u8",
       "sourceUrl": "",
       "enabled": true
@@ -37,7 +37,7 @@
       "name": "GTV",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "https://share.google/fZZXpx80WsZeQTqEC",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/9/9c/GTV_%282017%29.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
       "streamUrl": "https://mncmedia.malingtv.workers.dev/gtv.m3u8",
       "sourceUrl": "",
       "enabled": true
