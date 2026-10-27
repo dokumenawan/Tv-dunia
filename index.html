@@ -76,9 +76,18 @@ footer { color: var(--muted); text-align: center; padding: 24px; }
       Memuat daftar channel...
     </p>
   </div>
+  <div id="playerContainer" hidden>
+  <h2 id="playerTitle">Pemutar TV</h2>
+  <video id="player"
+         controls
+         playsinline
+         style="width:100%;max-width:800px;background:#000">
+  </video>
+  <p id="playerStatus"></p>
+</div>
 </main>
 <footer>TV Dunia · Prototipe awal</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
 const list = document.getElementById("channels");
 const status = document.getElementById("status");
@@ -126,10 +135,59 @@ async function loadChannels() {
       card.append(logo, name, detail);
 
       card.addEventListener("click", () => {
-        const url = channel.sourceUrl || channel.streamUrl;
-        if (url) window.open(url, "_blank", "noopener");
-      });
+  const url = channel.streamUrl;
+  if (!url) {
+    alert("URL stream belum tersedia.");
+    return;
+  }
 
+  const container = document.getElementById("playerContainer");
+  const video = document.getElementById("player");
+  const title = document.getElementById("playerTitle");
+  const playerStatus = document.getElementById("playerStatus");
+
+  container.hidden = false;
+  title.textContent = channel.name;
+  playerStatus.textContent = "Memuat siaran...";
+  container.scrollIntoView({ behavior: "smooth" });
+
+  if (video.hls) {
+    video.hls.destroy();
+    video.hls = null;
+  }
+
+  if (window.Hls && Hls.isSupported()) {
+    const hls = new Hls();
+    video.hls = hls;
+
+    hls.loadSource(url);
+    hls.attachMedia(video);
+
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+      playerStatus.textContent = "Siaran siap diputar.";
+      video.play().catch(() => {
+        playerStatus.textContent =
+          "Tekan tombol Play untuk memulai siaran.";
+      });
+    });
+
+    hls.on(Hls.Events.ERROR, (event, data) => {
+      if (data.fatal) {
+        playerStatus.textContent =
+          "Siaran gagal dimuat. Periksa koneksi atau sumber stream.";
+      }
+    });
+  } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+    video.src = url;
+    video.play().catch(() => {
+      playerStatus.textContent =
+        "Tekan tombol Play untuk memulai siaran.";
+    });
+  } else {
+    playerStatus.textContent =
+      "Browser ini tidak mendukung format stream.";
+  }
+});
       list.appendChild(card);
     });
 
