@@ -1,0 +1,16 @@
+
+{
+  "version": 1,
+  "channels": [
+    {
+      "id": "tvri-nasional",
+      "name": "TVRI Nasional",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "",
+      "streamUrl": "",
+      "sourceUrl": "",
+      "enabled": false
+    }
+  ]
+}
