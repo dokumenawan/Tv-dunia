@@ -13,6 +13,7 @@
   --blue: #398bff;
   --text: #f4f7ff;
   --muted: #a8b5ca;
+  --border: #263650;
 }
 * { box-sizing: border-box; }
 body {
@@ -24,7 +25,7 @@ body {
 header {
   padding: 22px 18px;
   background: #101a2b;
-  border-bottom: 1px solid #26334a;
+  border-bottom: 1px solid var(--border);
 }
 .brand { font-size: 25px; font-weight: 800; }
 .brand span { color: var(--blue); }
@@ -37,15 +38,16 @@ h2 { font-size: 19px; }
   gap: 14px;
 }
 .card {
-  border: 1px solid #263650;
+  border: 1px solid var(--border);
   background: var(--panel);
   border-radius: 16px;
   padding: 18px 12px;
   color: var(--text);
   text-align: center;
   cursor: pointer;
+  min-width: 0;
 }
-.card:active { border-color: var(--blue); }
+.card:active, .card:focus-visible { border-color: var(--blue); }
 .logo {
   width: 76px;
   height: 76px;
@@ -53,13 +55,61 @@ h2 { font-size: 19px; }
   margin: auto auto 12px;
   display: grid;
   place-items: center;
+  overflow: hidden;
   background: #eef3fa;
   color: #16213a;
   font-weight: 900;
-  font-size: 25px;
+  font-size: 20px;
 }
-.card small { color: var(--muted); display: block; margin-top: 6px; }
-footer { color: var(--muted); text-align: center; padding: 24px; }
+.card small {
+  color: var(--muted);
+  display: block;
+  margin-top: 6px;
+}
+#playerContainer {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+video {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  max-height: 65vh;
+  margin: auto;
+  background: #000;
+  border-radius: 10px;
+}
+#playerStatus {
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+#technicalError {
+  color: #ffd18a;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.actions button {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #1b2a42;
+  color: var(--text);
+}
+footer {
+  color: var(--muted);
+  text-align: center;
+  padding: 24px;
+}
 </style>
 </head>
 <body>
@@ -70,45 +120,248 @@ footer { color: var(--muted); text-align: center; padding: 24px; }
 
 <main>
   <h2>Saluran Indonesia</h2>
-
   <div class="channels" id="channels">
-    <p id="status" aria-live="polite">
-      Memuat daftar channel...
-    </p>
+    <p id="status" aria-live="polite">Memuat daftar channel...</p>
   </div>
-  <div id="playerContainer" hidden>
-  <h2 id="playerTitle">Pemutar TV</h2>
-  <video id="player"
-         controls
-         playsinline
-         style="width:100%;max-width:800px;background:#000">
-  </video>
-  <p id="playerStatus"></p>
-</div>
+
+  <section id="playerContainer" hidden>
+    <h2 id="playerTitle">Pemutar TV</h2>
+    <video id="player" controls playsinline></video>
+    <p id="playerStatus" aria-live="polite"></p>
+    <p id="technicalError"></p>
+    <div class="actions">
+      <button id="retryButton" type="button">Coba lagi</button>
+      <button id="openStreamButton" type="button">Buka URL stream</button>
+    </div>
+  </section>
 </main>
-<footer>TV Dunia · Prototipe awal</footer>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<footer>TV Dunia · Pemutar siaran</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
 <script>
+"use strict";
+
 const list = document.getElementById("channels");
 const status = document.getElementById("status");
+const container = document.getElementById("playerContainer");
+const video = document.getElementById("player");
+const title = document.getElementById("playerTitle");
+const playerStatus = document.getElementById("playerStatus");
+const technicalError = document.getElementById("technicalError");
+const retryButton = document.getElementById("retryButton");
+const openStreamButton = document.getElementById("openStreamButton");
+
+let channels = [];
+let currentChannel = null;
+let hlsInstance = null;
+
+function showTechnicalError(message) {
+  technicalError.textContent = message || "";
+}
+
+function destroyPlayer() {
+  if (hlsInstance) {
+    hlsInstance.destroy();
+    hlsInstance = null;
+  }
+
+  video.pause();
+  video.removeAttribute("src");
+  video.load();
+}
+
+function describeHlsError(data) {
+  const response = data.response || {};
+  const code = response.code || "tidak tersedia";
+  const details = data.details || "tidak tersedia";
+  const type = data.type || "tidak tersedia";
+  const requestUrl = data.url || currentChannel?.streamUrl || "";
+
+  let message = "Stream gagal dimuat.";
+
+  if (details === Hls.ErrorDetails.MANIFEST_LOAD_ERROR) {
+    message = "Playlist gagal diambil.";
+  } else if (details === Hls.ErrorDetails.MANIFEST_LOAD_TIMEOUT) {
+    message = "Permintaan playlist melewati batas waktu.";
+  } else if (details === Hls.ErrorDetails.MANIFEST_PARSING_ERROR) {
+    message = "Playlist diterima tetapi formatnya tidak valid.";
+  } else if (type === Hls.ErrorTypes.NETWORK_ERROR) {
+    message = "Terjadi masalah jaringan saat mengambil stream.";
+  } else if (type === Hls.ErrorTypes.MEDIA_ERROR) {
+    message = "Playlist terbaca, tetapi media gagal diputar.";
+  }
+
+  playerStatus.textContent = message;
+
+  showTechnicalError(
+    "Detail: " + details +
+    "\nJenis: " + type +
+    "\nHTTP: " + code +
+    "\nURL: " + requestUrl +
+    (response.text ? "\nRespons: " + response.text : "") +
+    (data.error ? "\nError: " + data.error.message : "")
+  );
+}
+
+function playChannel(channel) {
+  currentChannel = channel;
+
+  const url = channel.streamUrl;
+
+  if (!url) {
+    playerStatus.textContent = "URL stream belum tersedia.";
+    showTechnicalError("");
+    return;
+  }
+
+  container.hidden = false;
+  title.textContent = channel.name;
+  playerStatus.textContent = "Memuat siaran...";
+  showTechnicalError("");
+  container.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  destroyPlayer();
+
+  if (window.Hls && Hls.isSupported()) {
+    const hls = new Hls({
+      xhrSetup: function(xhr, requestUrl) {
+        const headers = channel.headers || {};
+
+        for (const [key, value] of Object.entries(headers)) {
+          try {
+            xhr.setRequestHeader(key, String(value));
+          } catch (error) {
+            console.warn("Header tidak dapat dipasang:", key, error);
+          }
+        }
+      },
+
+      fetchSetup: function(context, initParams) {
+        const headers = new Headers(initParams.headers || {});
+        const extraHeaders = channel.headers || {};
+
+        for (const [key, value] of Object.entries(extraHeaders)) {
+          try {
+            headers.set(key, String(value));
+          } catch (error) {
+            console.warn("Header Fetch tidak dapat dipasang:", key, error);
+          }
+        }
+
+        return new Request(context.url, {
+          ...initParams,
+          headers
+        });
+      }
+    });
+
+    hlsInstance = hls;
+
+    hls.on(Hls.Events.MEDIA_ATTACHED, function() {
+      hls.loadSource(url);
+    });
+
+    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+      playerStatus.textContent = "Playlist berhasil dibaca. Memulai siaran...";
+      showTechnicalError("");
+
+      video.play().catch(function() {
+        playerStatus.textContent =
+          "Playlist terbaca. Tekan tombol Play untuk memulai.";
+      });
+    });
+
+    hls.on(Hls.Events.ERROR, function(event, data) {
+      console.error("Detail error HLS:", {
+        channel: channel.name,
+        details: data.details,
+        type: data.type,
+        response: data.response,
+        url: data.url,
+        error: data.error
+      });
+
+      if (!data.fatal) {
+        return;
+      }
+
+      describeHlsError(data);
+
+      if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+        try {
+          hls.recoverMediaError();
+        } catch (error) {
+          console.error("Pemulihan media gagal:", error);
+        }
+      }
+    });
+
+    hls.on(Hls.Events.DESTROYING, function() {
+      console.log("Pemutar dihentikan:", channel.name);
+    });
+
+    hls.attachMedia(video);
+
+  } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+    video.src = url;
+
+    video.addEventListener("error", function() {
+      const mediaError = video.error;
+      playerStatus.textContent = "Browser gagal memutar stream.";
+      showTechnicalError(
+        "Kode media: " + (mediaError?.code || "tidak tersedia") +
+        "\nURL: " + url
+      );
+    }, { once: true });
+
+    video.play().catch(function(error) {
+      playerStatus.textContent =
+        "Tekan tombol Play atau periksa akses stream.";
+      showTechnicalError(error.message);
+    });
+
+  } else {
+    playerStatus.textContent =
+      "Browser ini tidak mendukung pemutaran HLS.";
+    showTechnicalError(
+      "Browser tidak mendukung hls.js maupun pemutaran HLS bawaan."
+    );
+  }
+}
 
 async function loadChannels() {
   try {
-    const response = await fetch("Channels.json");
-    if (!response.ok) throw new Error("File data tidak ditemukan");
+    const response = await fetch(
+      "Channels.json?v=" + Date.now(),
+      { cache: "no-store" }
+    );
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status + " saat mengambil Channels.json");
+    }
 
     const data = await response.json();
-    list.replaceChildren();
 
-    const channels = data.channels.filter(channel => channel.enabled);
+    if (!Array.isArray(data.channels)) {
+      throw new Error("Properti channels tidak ditemukan atau bukan array.");
+    }
+
+    channels = data.channels.filter(function(channel) {
+      return channel.enabled === true;
+    });
+
+    list.replaceChildren();
 
     if (!channels.length) {
       status.textContent = "Belum ada channel aktif.";
+      list.appendChild(status);
       return;
     }
 
-    channels.forEach(channel => {
+    channels.forEach(function(channel) {
       const card = document.createElement("button");
+      card.type = "button";
       card.className = "card";
 
       const logo = document.createElement("div");
@@ -118,8 +371,14 @@ async function loadChannels() {
         const img = document.createElement("img");
         img.src = channel.logo;
         img.alt = channel.name;
+        img.loading = "lazy";
         img.style.cssText =
           "width:100%;height:100%;object-fit:contain;border-radius:50%";
+
+        img.addEventListener("error", function() {
+          logo.textContent = channel.name;
+        });
+
         logo.replaceChildren(img);
       } else {
         logo.textContent = channel.name;
@@ -130,91 +389,35 @@ async function loadChannels() {
 
       const detail = document.createElement("small");
       detail.textContent =
-        `${channel.country} · ${channel.category}`;
+        (channel.country || "") + " · " + (channel.category || "");
 
       card.append(logo, name, detail);
-
-      card.addEventListener("click", () => {
-  const url = channel.streamUrl;
-  if (!url) {
-    alert("URL stream belum tersedia.");
-    return;
-  }
-
-  const container = document.getElementById("playerContainer");
-  const video = document.getElementById("player");
-  const title = document.getElementById("playerTitle");
-  const playerStatus = document.getElementById("playerStatus");
-
-  container.hidden = false;
-  title.textContent = channel.name;
-  playerStatus.textContent = "Memuat siaran...";
-  container.scrollIntoView({ behavior: "smooth" });
-
-  if (video.hls) {
-    video.hls.destroy();
-    video.hls = null;
-  }
-
-  if (window.Hls && Hls.isSupported()) {
-    const hls = new Hls();
-    video.hls = hls;
-
-    hls.loadSource(url);
-    hls.attachMedia(video);
-
-    hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      playerStatus.textContent = "Siaran siap diputar.";
-      video.play().catch(() => {
-        playerStatus.textContent =
-          "Tekan tombol Play untuk memulai siaran.";
+      card.addEventListener("click", function() {
+        playChannel(channel);
       });
-    });
 
-    hls.on(Hls.Events.ERROR, (event, data) => {
-  if (!data.fatal) return;
-
-  console.error("Detail error HLS:", data);
-
-  if (data.details === Hls.ErrorDetails.MANIFEST_LOAD_ERROR) {
-    playerStatus.textContent =
-      "Gagal mengambil playlist. Sumber mati, akses ditolak, atau masalah jaringan/CORS.";
-  } else if (
-    data.details === Hls.ErrorDetails.MANIFEST_PARSING_ERROR
-  ) {
-    playerStatus.textContent =
-      "Playlist ditemukan, tetapi formatnya tidak valid atau tidak dikenali.";
-  } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-    playerStatus.textContent =
-      "Playlist terbaca, tetapi format video atau codec bermasalah.";
-  } else {
-    playerStatus.textContent =
-      "Stream gagal dimuat: " + data.details;
-  }
-});
-  } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-    video.src = url;
-    video.play().catch(() => {
-      playerStatus.textContent =
-        "Tekan tombol Play untuk memulai siaran.";
-    });
-  } else {
-    playerStatus.textContent =
-      "Browser ini tidak mendukung format stream.";
-  }
-});
       list.appendChild(card);
     });
 
-    status.textContent = "";
   } catch (error) {
-    status.textContent =
-      "Daftar channel gagal dimuat. Periksa nama file dan koneksi.";
+    console.error("Gagal memuat daftar channel:", error);
+    status.textContent = "Daftar channel gagal dimuat: " + error.message;
   }
 }
 
+retryButton.addEventListener("click", function() {
+  if (currentChannel) {
+    playChannel(currentChannel);
+  }
+});
+
+openStreamButton.addEventListener("click", function() {
+  if (currentChannel?.streamUrl) {
+    window.open(currentChannel.streamUrl, "_blank", "noopener");
+  }
+});
+
 loadChannels();
 </script>
-
 </body>
 </html>
