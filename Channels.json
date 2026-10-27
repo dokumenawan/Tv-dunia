@@ -21,6 +21,16 @@
       "streamUrl": "http://edge.nim.mivo.tv/kqcsmbqna6yg/rcti2_all/playlist.m3u8",
       "sourceUrl": "",
       "enabled": true
+    },
+    {
+      "id": "nusantaratv-nasional",
+      "name": "Nusantara TV",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "",
+      "streamUrl": "https://nusantaratv.siar.us/nusantaratv/live/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": true
     }
   ]
 }
