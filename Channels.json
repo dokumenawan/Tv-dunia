@@ -4,7 +4,7 @@
   "channels": [
     {
       "id": "tvri-nasional",
-      "name": "TVRI Tes",
+      "name": "TVRI",
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "",
@@ -13,12 +13,12 @@
       "enabled": true
     },
     {
-      "id": "indosiar-nasional",
-      "name": "INDOSIAR",
+      "id": "rcti-nasional",
+      "name": "RCTI",
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "",
-      "streamUrl": "http://202.150.172.59/Indosiar/index.m3u8",
+      "streamUrl": "https://mncmedia.malingtv.workers.dev/rcti.m3u8",
       "sourceUrl": "",
       "enabled": true
     }
