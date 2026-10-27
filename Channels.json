@@ -1,6 +1,5 @@
-
 {
-  "version": 1,
+  "version": 2,
   "channels": [
     {
       "id": "tvri-nasional",
@@ -46,7 +45,7 @@
       "id": "metro-tv",
       "name": "Metro TV",
       "country": "Indonesia",
-      "category": "Nasional",
+      "category": "Berita",
       "logo": "https://www.google.com/s2/favicons?domain=metrotvnews.com&sz=128",
       "streamUrl": "https://edge.medcom.id/live-edge/smil:metro.smil/playlist.m3u8",
       "sourceUrl": "https://www.metrotvnews.com/",
@@ -63,13 +62,13 @@
       "enabled": true
     },
     {
-      "id": "mdtv",
-      "name": "MDTV",
+      "id": "metro-globe-network",
+      "name": "Metro Globe Network",
       "country": "Indonesia",
-      "category": "Nasional",
-      "logo": "https://commons.wikimedia.org/wiki/Special:FilePath/MDTV_logo.svg",
-      "streamUrl": "https://wahyu1ptv.pages.dev/MDTV-HD.m3u8",
-      "sourceUrl": "https://www.mdentertainment.co.id/",
+      "category": "Berita",
+      "logo": "https://www.google.com/s2/favicons?domain=medcom.id&sz=128",
+      "streamUrl": "https://edge.medcom.id/live-edge/smil:mgnch.smil/playlist.m3u8",
+      "sourceUrl": "https://www.medcom.id/",
       "enabled": true
     },
     {
@@ -90,16 +89,6 @@
       "logo": "https://www.google.com/s2/favicons?domain=lingkartv.my.id&sz=128",
       "streamUrl": "https://lingkartv.my.id/hls/lingkartv.m3u8",
       "sourceUrl": "",
-      "enabled": true
-    },
-    {
-      "id": "jogja-istimewa-tv",
-      "name": "Jogja Istimewa TV",
-      "country": "Indonesia",
-      "category": "Daerah",
-      "logo": "https://www.google.com/s2/favicons?domain=jogjatv.co.id&sz=128",
-      "streamUrl": "https://stream.jogjatv.co.id/jtvlive/stream/index.m3u8",
-      "sourceUrl": "https://www.jogjatv.co.id/live-streaming/",
       "enabled": true
     },
     {
@@ -131,6 +120,26 @@
       "streamUrl": "https://rinjanitv.cloud/hls/tvkabel.m3u8",
       "sourceUrl": "",
       "enabled": true
+    },
+    {
+      "id": "mdtv",
+      "name": "MDTV",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "https://commons.wikimedia.org/wiki/Special:FilePath/MDTV_logo.svg",
+      "streamUrl": "https://wahyu1ptv.pages.dev/MDTV-HD.m3u8",
+      "sourceUrl": "https://www.mdentertainment.co.id/",
+      "enabled": false
+    },
+    {
+      "id": "jogja-istimewa-tv",
+      "name": "Jogja Istimewa TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=jogjatv.co.id&sz=128",
+      "streamUrl": "https://stream.jogjatv.co.id/jtvlive/stream/index.m3u8",
+      "sourceUrl": "https://www.jogjatv.co.id/live-streaming/",
+      "enabled": false
     }
   ]
 }
