@@ -31,6 +31,16 @@
       "streamUrl": "https://nusantaratv.siar.us/nusantaratv/live/playlist.m3u8",
       "sourceUrl": "",
       "enabled": true
+    },
+    {
+      "id": "gtv-nasional",
+      "name": "GTV",
+      "country": "Indonesia",
+      "category": "Nasional",
+      "logo": "https://share.google/fZZXpx80WsZeQTqEC",
+      "streamUrl": "https://vcdn2.rctiplus.id/live/eds/gtv_fta/live_fta/gtv_fta-avc1_2000000=1-mp4a_64000_eng=2.m3u8",
+      "sourceUrl": "",
+      "enabled": true
     }
   ]
 }
