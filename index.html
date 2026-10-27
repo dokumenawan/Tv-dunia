@@ -172,11 +172,26 @@ async function loadChannels() {
     });
 
     hls.on(Hls.Events.ERROR, (event, data) => {
-      if (data.fatal) {
-        playerStatus.textContent =
-          "Siaran gagal dimuat. Periksa koneksi atau sumber stream.";
-      }
-    });
+  if (!data.fatal) return;
+
+  console.error("Detail error HLS:", data);
+
+  if (data.details === Hls.ErrorDetails.MANIFEST_LOAD_ERROR) {
+    playerStatus.textContent =
+      "Gagal mengambil playlist. Sumber mati, akses ditolak, atau masalah jaringan/CORS.";
+  } else if (
+    data.details === Hls.ErrorDetails.MANIFEST_PARSING_ERROR
+  ) {
+    playerStatus.textContent =
+      "Playlist ditemukan, tetapi formatnya tidak valid atau tidak dikenali.";
+  } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+    playerStatus.textContent =
+      "Playlist terbaca, tetapi format video atau codec bermasalah.";
+  } else {
+    playerStatus.textContent =
+      "Stream gagal dimuat: " + data.details;
+  }
+});
   } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
     video.src = url;
     video.play().catch(() => {
