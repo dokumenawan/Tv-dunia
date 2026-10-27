@@ -27,7 +27,7 @@
       "name": "U Channel",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "",
+      "logo": "https://commons.wikimedia.org/wiki/Special:FilePath/U-Channel_id.png",
       "streamUrl": "https://srs.u-channel.tv/live/uchannel-tv.m3u8",
       "sourceUrl": "https://www.u-channel.tv/",
       "enabled": true
@@ -37,7 +37,7 @@
       "name": "Garuda TV",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "",
+      "logo": "https://commons.wikimedia.org/wiki/Special:FilePath/Logo_GarudaTV_Primer_Flat_2025.svg",
       "streamUrl": "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
       "sourceUrl": "https://garuda.tv/",
       "enabled": true
@@ -47,7 +47,7 @@
       "name": "Metro TV",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "",
+      "logo": "https://www.google.com/s2/favicons?domain=metrotvnews.com&sz=128",
       "streamUrl": "https://edge.medcom.id/live-edge/smil:metro.smil/playlist.m3u8",
       "sourceUrl": "https://www.metrotvnews.com/",
       "enabled": true
@@ -57,7 +57,7 @@
       "name": "Magna Channel",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "",
+      "logo": "https://www.google.com/s2/favicons?domain=medcom.id&sz=128",
       "streamUrl": "https://edge.medcom.id/live-edge/smil:magna.smil/playlist.m3u8",
       "sourceUrl": "https://www.medcom.id/",
       "enabled": true
@@ -67,9 +67,9 @@
       "name": "MDTV",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "",
+      "logo": "https://commons.wikimedia.org/wiki/Special:FilePath/MDTV_logo.svg",
       "streamUrl": "https://wahyu1ptv.pages.dev/MDTV-HD.m3u8",
-      "sourceUrl": "",
+      "sourceUrl": "https://www.mdentertainment.co.id/",
       "enabled": true
     },
     {
@@ -77,7 +77,7 @@
       "name": "Jambi TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "",
+      "logo": "https://www.google.com/s2/favicons?domain=jambitv.globaldigitalcore.com&sz=128",
       "streamUrl": "https://jambitv.globaldigitalcore.com/hls/sah5tu7Eiveepohyieyie3OoteL2anga.m3u8",
       "sourceUrl": "",
       "enabled": true
@@ -87,7 +87,7 @@
       "name": "Lingkar TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "",
+      "logo": "https://www.google.com/s2/favicons?domain=lingkartv.my.id&sz=128",
       "streamUrl": "https://lingkartv.my.id/hls/lingkartv.m3u8",
       "sourceUrl": "",
       "enabled": true
@@ -97,9 +97,9 @@
       "name": "Jogja Istimewa TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "",
+      "logo": "https://www.google.com/s2/favicons?domain=jogjatv.co.id&sz=128",
       "streamUrl": "https://stream.jogjatv.co.id/jtvlive/stream/index.m3u8",
-      "sourceUrl": "",
+      "sourceUrl": "https://www.jogjatv.co.id/live-streaming/",
       "enabled": true
     },
     {
@@ -107,7 +107,7 @@
       "name": "Radar Lampung TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "",
+      "logo": "https://www.google.com/s2/favicons?domain=radartv.co.id&sz=128",
       "streamUrl": "https://www.streaming.radartv.co.id/hls/test.m3u8",
       "sourceUrl": "",
       "enabled": true
@@ -117,7 +117,7 @@
       "name": "Salira TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "",
+      "logo": "https://www.google.com/s2/favicons?domain=live.salira.tv&sz=128",
       "streamUrl": "https://live.salira.tv/p/3870/hybrid/play.m3u8",
       "sourceUrl": "https://live.salira.tv/",
       "enabled": true
@@ -127,7 +127,7 @@
       "name": "Rinjani TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "",
+      "logo": "https://www.google.com/s2/favicons?domain=rinjanitv.cloud&sz=128",
       "streamUrl": "https://rinjanitv.cloud/hls/tvkabel.m3u8",
       "sourceUrl": "",
       "enabled": true
