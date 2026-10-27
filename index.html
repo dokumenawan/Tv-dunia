@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="id">
 <head>
@@ -37,6 +36,7 @@ h2 { font-size: 19px; }
   grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
   gap: 14px;
 }
+.channels > p { grid-column: 1 / -1; margin: 0; line-height: 1.6; overflow-wrap: anywhere; }
 .card {
   border: 1px solid var(--border);
   background: var(--panel);
@@ -46,8 +46,10 @@ h2 { font-size: 19px; }
   text-align: center;
   cursor: pointer;
   min-width: 0;
+  font: inherit;
 }
-.card:active, .card:focus-visible { border-color: var(--blue); }
+.card:active, .card:focus-visible, .card.active { border-color: var(--blue); }
+.card.active { box-shadow: 0 0 0 1px var(--blue); }
 .logo {
   width: 76px;
   height: 76px;
@@ -59,8 +61,10 @@ h2 { font-size: 19px; }
   background: #eef3fa;
   color: #16213a;
   font-weight: 900;
-  font-size: 20px;
+  font-size: 14px;
+  padding: 4px;
 }
+.logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
 .card small {
   color: var(--muted);
   display: block;
@@ -104,6 +108,8 @@ video {
   border: 1px solid var(--border);
   background: #1b2a42;
   color: var(--text);
+  font: inherit;
+  cursor: pointer;
 }
 footer {
   color: var(--muted);
@@ -121,7 +127,7 @@ footer {
 <main>
   <h2>Saluran Indonesia</h2>
   <div class="channels" id="channels">
-    <p id="status" aria-live="polite">Memuat daftar channel...</p>
+    <p id="listStatus" aria-live="polite">Memuat daftar channel...</p>
   </div>
 
   <section id="playerContainer" hidden>
@@ -138,50 +144,84 @@ footer {
 
 <footer>TV Dunia · Pemutar siaran</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
 <script>
 "use strict";
 
-const list = document.getElementById("channels");
-const status = document.getElementById("status");
+/* ====== Pengaturan ====== */
+const CHANNEL_FILES = ["Channels.json", "channels.json"]; // dicoba berurutan
+const START_TIMEOUT_MS = 20000; // batas waktu menunggu siaran mulai
+const MAX_NETWORK_RETRY = 3;
+const MAX_MEDIA_RETRY = 2;
+
+/* ====== Elemen ====== */
+const listEl = document.getElementById("channels");
+const listStatus = document.getElementById("listStatus");
 const container = document.getElementById("playerContainer");
 const video = document.getElementById("player");
-const title = document.getElementById("playerTitle");
+const titleEl = document.getElementById("playerTitle");
 const playerStatus = document.getElementById("playerStatus");
 const technicalError = document.getElementById("technicalError");
 const retryButton = document.getElementById("retryButton");
 const openStreamButton = document.getElementById("openStreamButton");
 
+/* ====== State ====== */
 let channels = [];
 let currentChannel = null;
 let hlsInstance = null;
+let sessionId = 0;      // penanda sesi putar, untuk mengabaikan event usang
+let startTimer = null;
+let cards = [];
 
-function showTechnicalError(message) {
-  technicalError.textContent = message || "";
+/* ====== Utilitas ====== */
+function setStatus(text) {
+  playerStatus.textContent = text || "";
+}
+
+function showTechnicalError(text) {
+  technicalError.textContent = text || "";
+}
+
+function clearStartTimer() {
+  if (startTimer) {
+    clearTimeout(startTimer);
+    startTimer = null;
+  }
+}
+
+function setActiveCard(channel) {
+  cards.forEach(function(item) {
+    item.element.classList.toggle("active", item.channel === channel);
+  });
 }
 
 function destroyPlayer() {
+  clearStartTimer();
+
   if (hlsInstance) {
     hlsInstance.destroy();
     hlsInstance = null;
   }
 
+  video.onerror = null;
   video.pause();
   video.removeAttribute("src");
   video.load();
 }
 
-function describeHlsError(data) {
+function describeHlsError(data, channel) {
   const response = data.response || {};
   const code = response.code || "tidak tersedia";
   const details = data.details || "tidak tersedia";
   const type = data.type || "tidak tersedia";
-  const requestUrl = data.url || currentChannel?.streamUrl || "";
+  const requestUrl = data.url || channel.streamUrl || "";
 
   let message = "Stream gagal dimuat.";
 
   if (details === Hls.ErrorDetails.MANIFEST_LOAD_ERROR) {
-    message = "Playlist gagal diambil.";
+    message = response.code
+      ? "Playlist gagal diambil (server menjawab HTTP " + response.code + "). Link stream mungkin sudah mati."
+      : "Playlist gagal diambil. Server kemungkinan tidak mengizinkan akses dari browser (CORS) atau sedang mati.";
   } else if (details === Hls.ErrorDetails.MANIFEST_LOAD_TIMEOUT) {
     message = "Permintaan playlist melewati batas waktu.";
   } else if (details === Hls.ErrorDetails.MANIFEST_PARSING_ERROR) {
@@ -192,7 +232,7 @@ function describeHlsError(data) {
     message = "Playlist terbaca, tetapi media gagal diputar.";
   }
 
-  playerStatus.textContent = message;
+  setStatus(message);
 
   showTechnicalError(
     "Detail: " + details +
@@ -200,34 +240,63 @@ function describeHlsError(data) {
     "\nHTTP: " + code +
     "\nURL: " + requestUrl +
     (response.text ? "\nRespons: " + response.text : "") +
-    (data.error ? "\nError: " + data.error.message : "")
+    (data.error && data.error.message ? "\nError: " + data.error.message : "")
   );
 }
 
+/* ====== Pemutar ====== */
 function playChannel(channel) {
   currentChannel = channel;
+  sessionId += 1;
+  const mySession = sessionId;
 
   const url = channel.streamUrl;
 
-  if (!url) {
-    playerStatus.textContent = "URL stream belum tersedia.";
-    showTechnicalError("");
-    return;
-  }
-
   container.hidden = false;
-  title.textContent = channel.name;
-  playerStatus.textContent = "Memuat siaran...";
+  titleEl.textContent = channel.name;
+  setActiveCard(channel);
   showTechnicalError("");
   container.scrollIntoView({ behavior: "smooth", block: "start" });
 
   destroyPlayer();
 
-  if (window.Hls && Hls.isSupported()) {
-    const hls = new Hls({
-      xhrSetup: function(xhr, requestUrl) {
-        const headers = channel.headers || {};
+  if (!url) {
+    setStatus("URL stream belum tersedia.");
+    return;
+  }
 
+  if (location.protocol === "https:" && /^http:\/\//i.test(url)) {
+    setStatus("Stream ini memakai http, sedangkan situs memakai https, jadi diblokir browser.");
+    showTechnicalError("URL: " + url + "\nSolusi: pakai versi https dari stream ini, atau nonaktifkan channelnya.");
+    return;
+  }
+
+  setStatus("Memuat siaran...");
+
+  startTimer = setTimeout(function() {
+    if (mySession !== sessionId) return;
+    setStatus("Siaran belum mulai setelah " + (START_TIMEOUT_MS / 1000) + " detik. Tekan \"Coba lagi\" atau cek URL stream.");
+  }, START_TIMEOUT_MS);
+
+  video.addEventListener("playing", function onPlaying() {
+    if (mySession !== sessionId) return;
+    clearStartTimer();
+    setStatus("Sedang menyiarkan.");
+    showTechnicalError("");
+  }, { once: true });
+
+  if (window.Hls && Hls.isSupported()) {
+    let networkRetries = 0;
+    let mediaRetries = 0;
+
+    const headers = channel.headers || {};
+
+    const hls = new Hls({
+      manifestLoadingTimeOut: 15000,
+      manifestLoadingMaxRetry: 2,
+      levelLoadingTimeOut: 15000,
+      fragLoadingTimeOut: 25000,
+      xhrSetup: function(xhr) {
         for (const [key, value] of Object.entries(headers)) {
           try {
             xhr.setRequestHeader(key, String(value));
@@ -235,176 +304,195 @@ function playChannel(channel) {
             console.warn("Header tidak dapat dipasang:", key, error);
           }
         }
-      },
-
-      fetchSetup: function(context, initParams) {
-        const headers = new Headers(initParams.headers || {});
-        const extraHeaders = channel.headers || {};
-
-        for (const [key, value] of Object.entries(extraHeaders)) {
-          try {
-            headers.set(key, String(value));
-          } catch (error) {
-            console.warn("Header Fetch tidak dapat dipasang:", key, error);
-          }
-        }
-
-        return new Request(context.url, {
-          ...initParams,
-          headers
-        });
       }
     });
 
     hlsInstance = hls;
 
     hls.on(Hls.Events.MEDIA_ATTACHED, function() {
+      if (mySession !== sessionId) return;
       hls.loadSource(url);
     });
 
     hls.on(Hls.Events.MANIFEST_PARSED, function() {
-      playerStatus.textContent = "Playlist berhasil dibaca. Memulai siaran...";
+      if (mySession !== sessionId) return;
+      setStatus("Playlist berhasil dibaca. Memulai siaran...");
       showTechnicalError("");
 
       video.play().catch(function() {
-        playerStatus.textContent =
-          "Playlist terbaca. Tekan tombol Play untuk memulai.";
+        setStatus("Playlist terbaca. Tekan tombol Play untuk memulai.");
       });
     });
 
     hls.on(Hls.Events.ERROR, function(event, data) {
+      if (mySession !== sessionId) return;
+
       console.error("Detail error HLS:", {
         channel: channel.name,
         details: data.details,
         type: data.type,
+        fatal: data.fatal,
         response: data.response,
         url: data.url,
         error: data.error
       });
 
-      if (!data.fatal) {
-        return;
-      }
+      if (!data.fatal) return;
 
-      describeHlsError(data);
-
-      if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+      if (data.type === Hls.ErrorTypes.MEDIA_ERROR && mediaRetries < MAX_MEDIA_RETRY) {
+        mediaRetries += 1;
+        setStatus("Gangguan media, mencoba memulihkan (" + mediaRetries + "/" + MAX_MEDIA_RETRY + ")...");
         try {
           hls.recoverMediaError();
         } catch (error) {
           console.error("Pemulihan media gagal:", error);
         }
+        return;
       }
-    });
 
-    hls.on(Hls.Events.DESTROYING, function() {
-      console.log("Pemutar dihentikan:", channel.name);
+      if (data.type === Hls.ErrorTypes.NETWORK_ERROR && networkRetries < MAX_NETWORK_RETRY) {
+        networkRetries += 1;
+        setStatus("Jaringan terganggu, mencoba lagi (" + networkRetries + "/" + MAX_NETWORK_RETRY + ")...");
+        setTimeout(function() {
+          if (mySession !== sessionId) return;
+          try {
+            hls.startLoad();
+          } catch (error) {
+            console.error("Muat ulang gagal:", error);
+          }
+        }, 1500 * networkRetries);
+        return;
+      }
+
+      clearStartTimer();
+      describeHlsError(data, channel);
+      hls.destroy();
+      if (hlsInstance === hls) hlsInstance = null;
     });
 
     hls.attachMedia(video);
 
   } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-    video.src = url;
-
-    video.addEventListener("error", function() {
+    video.onerror = function() {
+      if (mySession !== sessionId) return;
       const mediaError = video.error;
-      playerStatus.textContent = "Browser gagal memutar stream.";
+      clearStartTimer();
+      setStatus("Browser gagal memutar stream.");
       showTechnicalError(
-        "Kode media: " + (mediaError?.code || "tidak tersedia") +
+        "Kode media: " + (mediaError && mediaError.code ? mediaError.code : "tidak tersedia") +
         "\nURL: " + url
       );
-    }, { once: true });
+    };
+
+    video.src = url;
 
     video.play().catch(function(error) {
-      playerStatus.textContent =
-        "Tekan tombol Play atau periksa akses stream.";
-      showTechnicalError(error.message);
+      if (mySession !== sessionId) return;
+      setStatus("Tekan tombol Play atau periksa akses stream.");
+      showTechnicalError(error && error.message ? error.message : "");
     });
 
   } else {
-    playerStatus.textContent =
-      "Browser ini tidak mendukung pemutaran HLS.";
-    showTechnicalError(
-      "Browser tidak mendukung hls.js maupun pemutaran HLS bawaan."
-    );
+    clearStartTimer();
+    setStatus("Browser ini tidak mendukung pemutaran HLS.");
+    showTechnicalError("Browser tidak mendukung hls.js maupun pemutaran HLS bawaan.");
   }
+}
+
+/* ====== Daftar channel ====== */
+async function fetchChannelData() {
+  const problems = [];
+
+  for (const file of CHANNEL_FILES) {
+    try {
+      const response = await fetch(file + "?v=" + Date.now(), { cache: "no-store" });
+
+      if (!response.ok) {
+        throw new Error("HTTP " + response.status);
+      }
+
+      return await response.json();
+    } catch (error) {
+      problems.push(file + ": " + error.message);
+    }
+  }
+
+  throw new Error(problems.join(" | "));
+}
+
+function buildCard(channel) {
+  const card = document.createElement("button");
+  card.type = "button";
+  card.className = "card";
+
+  const logo = document.createElement("div");
+  logo.className = "logo";
+
+  function showNameAsLogo() {
+    logo.replaceChildren(document.createTextNode(channel.name));
+  }
+
+  if (channel.logo) {
+    const img = document.createElement("img");
+    img.src = channel.logo;
+    img.alt = channel.name;
+    img.loading = "lazy";
+    img.referrerPolicy = "no-referrer";
+    img.addEventListener("error", showNameAsLogo);
+    logo.appendChild(img);
+  } else {
+    showNameAsLogo();
+  }
+
+  const name = document.createElement("strong");
+  name.textContent = channel.name;
+
+  const detail = document.createElement("small");
+  detail.textContent = [channel.country, channel.category].filter(Boolean).join(" · ");
+
+  card.append(logo, name, detail);
+  card.addEventListener("click", function() {
+    playChannel(channel);
+  });
+
+  return card;
 }
 
 async function loadChannels() {
   try {
-    const response = await fetch(
-      "Channels.json?v=" + Date.now(),
-      { cache: "no-store" }
-    );
+    const data = await fetchChannelData();
+    const rawList = Array.isArray(data) ? data : data.channels;
 
-    if (!response.ok) {
-      throw new Error("HTTP " + response.status + " saat mengambil Channels.json");
-    }
-
-    const data = await response.json();
-
-    if (!Array.isArray(data.channels)) {
+    if (!Array.isArray(rawList)) {
       throw new Error("Properti channels tidak ditemukan atau bukan array.");
     }
 
-    channels = data.channels.filter(function(channel) {
-      return channel.enabled === true;
+    channels = rawList.filter(function(channel) {
+      return channel && channel.name && channel.enabled !== false;
     });
 
-    list.replaceChildren();
+    listEl.replaceChildren();
+    cards = [];
 
     if (!channels.length) {
-      status.textContent = "Belum ada channel aktif.";
-      list.appendChild(status);
+      listStatus.textContent = "Belum ada channel aktif.";
+      listEl.appendChild(listStatus);
       return;
     }
 
     channels.forEach(function(channel) {
-      const card = document.createElement("button");
-      card.type = "button";
-      card.className = "card";
-
-      const logo = document.createElement("div");
-      logo.className = "logo";
-
-      if (channel.logo) {
-        const img = document.createElement("img");
-        img.src = channel.logo;
-        img.alt = channel.name;
-        img.loading = "lazy";
-        img.style.cssText =
-          "width:100%;height:100%;object-fit:contain;border-radius:50%";
-
-        img.addEventListener("error", function() {
-          logo.textContent = channel.name;
-        });
-
-        logo.replaceChildren(img);
-      } else {
-        logo.textContent = channel.name;
-      }
-
-      const name = document.createElement("strong");
-      name.textContent = channel.name;
-
-      const detail = document.createElement("small");
-      detail.textContent =
-        (channel.country || "") + " · " + (channel.category || "");
-
-      card.append(logo, name, detail);
-      card.addEventListener("click", function() {
-        playChannel(channel);
-      });
-
-      list.appendChild(card);
+      const element = buildCard(channel);
+      cards.push({ channel: channel, element: element });
+      listEl.appendChild(element);
     });
 
   } catch (error) {
     console.error("Gagal memuat daftar channel:", error);
-    status.textContent = "Daftar channel gagal dimuat: " + error.message;
+    listStatus.textContent = "Daftar channel gagal dimuat: " + error.message;
   }
 }
 
+/* ====== Tombol ====== */
 retryButton.addEventListener("click", function() {
   if (currentChannel) {
     playChannel(currentChannel);
@@ -412,7 +500,7 @@ retryButton.addEventListener("click", function() {
 });
 
 openStreamButton.addEventListener("click", function() {
-  if (currentChannel?.streamUrl) {
+  if (currentChannel && currentChannel.streamUrl) {
     window.open(currentChannel.streamUrl, "_blank", "noopener");
   }
 });
