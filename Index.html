@@ -1,0 +1,92 @@
+
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TV Dunia</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #080d18;
+  --panel: #121c2d;
+  --blue: #398bff;
+  --text: #f4f7ff;
+  --muted: #a8b5ca;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+header {
+  padding: 22px 18px;
+  background: #101a2b;
+  border-bottom: 1px solid #26334a;
+}
+.brand { font-size: 25px; font-weight: 800; }
+.brand span { color: var(--blue); }
+header p { color: var(--muted); margin-bottom: 0; }
+main { padding: 20px 16px; max-width: 900px; margin: auto; }
+h2 { font-size: 19px; }
+.channels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 14px;
+}
+.card {
+  border: 1px solid #263650;
+  background: var(--panel);
+  border-radius: 16px;
+  padding: 18px 12px;
+  color: var(--text);
+  text-align: center;
+  cursor: pointer;
+}
+.card:active { border-color: var(--blue); }
+.logo {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  margin: auto auto 12px;
+  display: grid;
+  place-items: center;
+  background: #eef3fa;
+  color: #16213a;
+  font-weight: 900;
+  font-size: 25px;
+}
+.card small { color: var(--muted); display: block; margin-top: 6px; }
+footer { color: var(--muted); text-align: center; padding: 24px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">TV <span>DUNIA</span></div>
+  <p>Temukan siaran dari berbagai negara.</p>
+</header>
+<main>
+  <h2>Saluran Indonesia</h2>
+  <div class="channels" id="channels">
+    <button class="card" id="tvri">
+      <div class="logo">TVRI</div>
+      <strong>TVRI Nasional</strong>
+      <small>Indonesia · Nasional</small>
+    </button>
+  </div>
+  <p id="status" aria-live="polite"></p>
+</main>
+<footer>TV Dunia · Prototipe awal</footer>
+<script>
+document.getElementById("tvri").addEventListener("click", () => {
+  window.open(
+    "https://klik.tvri.go.id/detailchannel/TVRI_CH_00",
+    "_blank",
+    "noopener"
+  );
+});
+</script>
+</body>
+</html>
