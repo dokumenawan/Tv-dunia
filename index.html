@@ -69,9 +69,9 @@ footer { color: var(--muted); text-align: center; padding: 24px; }
 </header>
 <main>
   <h2>Saluran Indonesia</h2>
-  <div class="channels" id="channels">
-    <button class="card" id="tvri">
-      <div class="logo">TVRI</div>
+<div class="channels" id="channels">
+  <p id="status">Memuat daftar channel...</p>
+</div>
       <strong>TVRI Nasional</strong>
       <small>Indonesia · Nasional</small>
     </button>
@@ -79,14 +79,70 @@ footer { color: var(--muted); text-align: center; padding: 24px; }
   <p id="status" aria-live="polite"></p>
 </main>
 <footer>TV Dunia · Prototipe awal</footer>
+
 <script>
-document.getElementById("tvri").addEventListener("click", () => {
-  window.open(
-    "https://klik.tvri.go.id/detailchannel/TVRI_CH_00",
-    "_blank",
-    "noopener"
-  );
-});
+const list = document.getElementById("channels");
+const status = document.getElementById("status");
+
+async function loadChannels() {
+  try {
+    const response = await fetch("Channels.json");
+    if (!response.ok) throw new Error("File data tidak ditemukan");
+
+    const data = await response.json();
+    list.replaceChildren();
+
+    const channels = data.channels.filter(channel => channel.enabled);
+
+    if (!channels.length) {
+      status.textContent = "Belum ada channel aktif.";
+      return;
+    }
+
+    channels.forEach(channel => {
+      const card = document.createElement("button");
+      card.className = "card";
+
+      const logo = document.createElement("div");
+      logo.className = "logo";
+
+      if (channel.logo) {
+        const img = document.createElement("img");
+        img.src = channel.logo;
+        img.alt = channel.name;
+        img.style.cssText =
+          "width:100%;height:100%;object-fit:contain;border-radius:50%";
+        logo.replaceChildren(img);
+      } else {
+        logo.textContent = channel.name;
+      }
+
+      const name = document.createElement("strong");
+      name.textContent = channel.name;
+
+      const detail = document.createElement("small");
+      detail.textContent =
+        `${channel.country} · ${channel.category}`;
+
+      card.append(logo, name, detail);
+
+      card.addEventListener("click", () => {
+        const url = channel.sourceUrl || channel.streamUrl;
+        if (url) window.open(url, "_blank", "noopener");
+      });
+
+      list.appendChild(card);
+    });
+
+    status.textContent = "";
+  } catch (error) {
+    status.textContent =
+      "Daftar channel gagal dimuat. Periksa nama file dan koneksi.";
+  }
+}
+
+loadChannels();
 </script>
+
 </body>
 </html>
