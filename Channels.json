@@ -8,9 +8,9 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "",
-      "streamUrl": "",
-      "sourceUrl": "",
-      "enabled": false
+      "streamUrl": "https://klik.tvri.go.id/detailchannel/TVRI_CH_00",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
     }
   ]
 }
