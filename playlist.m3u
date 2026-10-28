@@ -1,0 +1,25 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="tvri-nasional" tvg-name="TVRI" tvg-logo="https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256" group-title="Nasional",TVRI
+https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8
+#EXTINF:-1 tvg-id="metro-tv" tvg-name="Metro TV" tvg-logo="https://www.google.com/s2/favicons?domain=metrotvnews.com&sz=256" group-title="Berita",Metro TV
+https://edge.medcom.id/live-edge/smil:metro.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="magna-channel" tvg-name="Magna Channel" tvg-logo="https://www.google.com/s2/favicons?domain=medcom.id&sz=256" group-title="Nasional",Magna Channel
+https://edge.medcom.id/live-edge/smil:magna.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="metro-globe-network" tvg-name="Metro Globe Network" tvg-logo="" group-title="Berita",Metro Globe Network
+https://edge.medcom.id/live-edge/smil:mgnch.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="nusantaratv-nasional" tvg-name="Nusantara TV" tvg-logo="https://www.google.com/s2/favicons?domain=nusantaratv.com&sz=256" group-title="Nasional",Nusantara TV
+https://nusantaratv.siar.us/nusantaratv/live/playlist.m3u8
+#EXTINF:-1 tvg-id="u-channel" tvg-name="U Channel" tvg-logo="https://www.google.com/s2/favicons?domain=u-channel.tv&sz=256" group-title="Nasional",U Channel
+https://srs.u-channel.tv/live/uchannel-tv.m3u8
+#EXTINF:-1 tvg-id="garuda-tv" tvg-name="Garuda TV" tvg-logo="https://www.google.com/s2/favicons?domain=garuda.tv&sz=256" group-title="Nasional",Garuda TV
+https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8
+#EXTINF:-1 tvg-id="jambi-tv" tvg-name="Jambi TV" tvg-logo="" group-title="Daerah",Jambi TV
+https://jambitv.globaldigitalcore.com/hls/sah5tu7Eiveepohyieyie3OoteL2anga.m3u8
+#EXTINF:-1 tvg-id="lingkar-tv" tvg-name="Lingkar TV" tvg-logo="" group-title="Daerah",Lingkar TV
+https://lingkartv.my.id/hls/lingkartv.m3u8
+#EXTINF:-1 tvg-id="radar-lampung-tv" tvg-name="Radar Lampung TV" tvg-logo="" group-title="Daerah",Radar Lampung TV
+https://www.streaming.radartv.co.id/hls/test.m3u8
+#EXTINF:-1 tvg-id="salira-tv" tvg-name="Salira TV" tvg-logo="" group-title="Daerah",Salira TV
+https://live.salira.tv/p/3870/hybrid/play.m3u8
+#EXTINF:-1 tvg-id="rinjani-tv" tvg-name="Rinjani TV" tvg-logo="" group-title="Daerah",Rinjani TV
+https://rinjanitv.cloud/hls/tvkabel.m3u8
