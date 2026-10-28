@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "channels": [
     {
       "id": "tvri-nasional",
@@ -79,7 +79,7 @@
       "name": "Jambi TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "https://www.google.com/s2/favicons?domain=jambitv.globaldigitalcore.com&sz=256",
+      "logo": "",
       "streamUrl": "https://jambitv.globaldigitalcore.com/hls/sah5tu7Eiveepohyieyie3OoteL2anga.m3u8",
       "sourceUrl": "",
       "enabled": true
@@ -89,7 +89,7 @@
       "name": "Lingkar TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "https://www.google.com/s2/favicons?domain=lingkartv.my.id&sz=256",
+      "logo": "",
       "streamUrl": "https://lingkartv.my.id/hls/lingkartv.m3u8",
       "sourceUrl": "",
       "enabled": true
@@ -99,7 +99,7 @@
       "name": "Radar Lampung TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "https://www.google.com/s2/favicons?domain=radartv.co.id&sz=256",
+      "logo": "",
       "streamUrl": "https://www.streaming.radartv.co.id/hls/test.m3u8",
       "sourceUrl": "",
       "enabled": true
@@ -109,7 +109,7 @@
       "name": "Salira TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "https://www.google.com/s2/favicons?domain=live.salira.tv&sz=256",
+      "logo": "",
       "streamUrl": "https://live.salira.tv/p/3870/hybrid/play.m3u8",
       "sourceUrl": "https://live.salira.tv/",
       "enabled": true
@@ -119,7 +119,7 @@
       "name": "Rinjani TV",
       "country": "Indonesia",
       "category": "Daerah",
-      "logo": "https://www.google.com/s2/favicons?domain=rinjanitv.cloud&sz=256",
+      "logo": "",
       "streamUrl": "https://rinjanitv.cloud/hls/tvkabel.m3u8",
       "sourceUrl": "",
       "enabled": true
