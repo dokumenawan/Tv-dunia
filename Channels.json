@@ -26,7 +26,7 @@
       "name": "Magna Channel",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "https://www.google.com/s2/favicons?domain=medcom.id&sz=256",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/1/1d/MagnaChannel.webp?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original",
       "streamUrl": "https://edge.medcom.id/live-edge/smil:magna.smil/playlist.m3u8",
       "sourceUrl": "https://www.medcom.id/",
       "enabled": true
