@@ -421,12 +421,26 @@ async function fetchChannelData() {
 }
 
 /* ====== Logo ====== */
+function showInitials(logoEl, name) {
+  const words = String(name || "?").split(/\s+/).filter(Boolean);
+  let text = words.map(function(word) { return word[0]; }).join("").slice(0, 3).toUpperCase();
+  if (words.length === 1) text = words[0].slice(0, 3).toUpperCase();
+
+  let hash = 0;
+  for (const ch of String(name)) hash = (hash * 31 + ch.charCodeAt(0)) % 360;
+
+  logoEl.style.background = "hsl(" + hash + ", 55%, 38%)";
+  logoEl.style.color = "#fff";
+  logoEl.style.fontSize = "22px";
+  logoEl.replaceChildren(document.createTextNode(text));
+}
+
 function setLogo(item, urls) {
   const list = urls.filter(Boolean);
   const logo = item.logoEl;
 
   function showName() {
-    logo.replaceChildren(document.createTextNode(item.channel.name));
+    showInitials(logo, item.channel.name);
   }
 
   if (!list.length) {
@@ -447,6 +461,9 @@ function setLogo(item, urls) {
       showName();
     }
   });
+  logo.style.background = "";
+  logo.style.color = "";
+  logo.style.fontSize = "";
   img.src = list[0];
   logo.replaceChildren(img);
 }
@@ -485,19 +502,18 @@ function buildCard(channel) {
 /* ====== Logo dari Wikipedia (diambil langsung oleh browser) ====== */
 const WIKI_EN = "https://en.wikipedia.org/w/api.php";
 const WIKI_ID = "https://id.wikipedia.org/w/api.php";
-const LOGO_CACHE_KEY = "tvdunia.wikilogos.v1";
+const LOGO_CACHE_KEY = "tvdunia.wikilogos.v2";
+
+// Nama file yang jelas bukan logo channel (ikon Wikipedia, bendera, peta, dll.)
+const BAD_FILE = /(commons-logo|wikimedia|wikipedia|wiktionary|wikiquote|wikisource|wikidata|edit-|question_book|ambox|flag_of|bendera|map_of|peta|icon|symbol|text_document|crystal|folder|padlock|disambig|portal|nuvola|searchtool|speaker|ooui|lock-|merge|split|stub|increase|decrease|steady|screenshot|building|gedung|tower|studio)/i;
+const WEAK_FILE = /(old|former|lama|variant|alt|wordmark|text)/i;
 
 function wikiUrl(base, extra) {
-  const params = new URLSearchParams(Object.assign({
+  return base + "?" + new URLSearchParams(Object.assign({
     action: "query",
     format: "json",
-    origin: "*",
-    prop: "pageimages",
-    piprop: "thumbnail",
-    pithumbsize: "256",
-    pilicense: "any"
-  }, extra));
-  return base + "?" + params.toString();
+    origin: "*"
+  }, extra)).toString();
 }
 
 async function wikiJson(url) {
@@ -512,51 +528,122 @@ function compact(text) {
   return String(text || "").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
-// Ambil gambar utama artikel berdasarkan judul. Hasil: { judul: urlGambar }
-async function wikiLogosByTitle(titles) {
-  const result = {};
-  if (!titles.length) return result;
+// Pilih file logo dari daftar gambar di artikel: nama file harus memuat nama channel
+function pickLogoFile(files, channelName) {
+  const wanted = compact(channelName);
+  let best = "";
+  let bestScore = 0;
 
-  const data = await wikiJson(
-    wikiUrl(WIKI_EN, { titles: titles.join("|"), redirects: "1" })
-  );
-  const query = data.query || {};
+  files.forEach(function(file) {
+    const base = String(file).replace(/^[^:]+:/, "");
+    if (BAD_FILE.test(base)) return;
+    if (!/\.(svg|png|jpg|jpeg|webp)$/i.test(base)) return;
 
-  const alias = {};
-  (query.normalized || []).forEach(function(item) { alias[item.from] = item.to; });
-  (query.redirects || []).forEach(function(item) { alias[item.from] = item.to; });
+    const name = compact(base.replace(/\.[a-z]+$/i, ""));
+    if (!wanted || !name.includes(wanted)) return;
 
-  const finalImages = {};
-  Object.values(query.pages || {}).forEach(function(page) {
-    if (page.thumbnail && page.thumbnail.source) {
-      finalImages[page.title] = page.thumbnail.source;
+    let score = 4;
+    if (name.includes("logo")) score += 1;
+    if (/\.svg$/i.test(base)) score += 1;
+    if (WEAK_FILE.test(base)) score -= 2;
+
+    const years = base.match(/(19|20)\d\d/g);
+    if (years) {
+      score += (Math.max.apply(null, years.map(Number)) - 1990) / 8;
+    }
+
+    if (score > bestScore) {
+      bestScore = score;
+      best = file;
     }
   });
 
-  titles.forEach(function(title) {
-    let finalTitle = title;
-    if (alias[finalTitle]) finalTitle = alias[finalTitle];
-    if (alias[finalTitle]) finalTitle = alias[finalTitle];
-    if (finalImages[finalTitle]) result[title] = finalImages[finalTitle];
-  });
-
-  return result;
+  return best;
 }
 
-// Cadangan: cari artikel lewat pencarian, terima hanya jika judulnya cocok dengan nama channel
-async function wikiLogoBySearch(base, queryText, channelName) {
-  const data = await wikiJson(
-    wikiUrl(base, { generator: "search", gsrsearch: queryText, gsrlimit: "5" })
-  );
+async function wikiFileUrl(base, fileTitle) {
+  const data = await wikiJson(wikiUrl(base, {
+    prop: "imageinfo",
+    iiprop: "url",
+    iiurlwidth: "256",
+    titles: fileTitle
+  }));
   const pages = Object.values((data.query || {}).pages || {});
-  pages.sort(function(a, b) { return (a.index || 0) - (b.index || 0); });
+  const info = pages[0] && pages[0].imageinfo && pages[0].imageinfo[0];
+  return info ? (info.thumburl || info.url || "") : "";
+}
 
+async function wikiLogoFromArticle(base, title, channelName) {
+  const data = await wikiJson(wikiUrl(base, {
+    prop: "images",
+    imlimit: "500",
+    titles: title,
+    redirects: "1"
+  }));
+  const page = Object.values((data.query || {}).pages || {})[0];
+  if (!page || !page.images) return "";
+
+  const file = pickLogoFile(
+    page.images.map(function(image) { return image.title; }),
+    channelName
+  );
+  if (!file) return "";
+
+  const url = await wikiFileUrl(base, file);
+  if (url) console.info("Logo Wikipedia:", channelName, "->", title, "->", file);
+  return url;
+}
+
+async function wikiSearchTitles(base, queryText, channelName) {
+  const data = await wikiJson(wikiUrl(base, {
+    list: "search",
+    srsearch: queryText,
+    srlimit: "5"
+  }));
   const wanted = compact(channelName);
-  for (const page of pages) {
-    if (page.thumbnail && page.thumbnail.source && compact(page.title).includes(wanted)) {
-      return page.thumbnail.source;
+  return ((data.query || {}).search || [])
+    .map(function(result) { return result.title; })
+    .filter(function(title) { return compact(title).includes(wanted); })
+    .slice(0, 2);
+}
+
+async function findWikipediaLogo(channel) {
+  const name = channel.name;
+
+  if (channel.wikiFile) {
+    try {
+      const pinned = await wikiFileUrl(WIKI_EN, channel.wikiFile);
+      if (pinned) return pinned;
+    } catch (error) {
+      console.warn("Logo (wikiFile) gagal:", name, error);
     }
   }
+
+  const steps = [
+    async function() {
+      return { base: WIKI_EN, titles: channel.wikipedia ? [channel.wikipedia] : [] };
+    },
+    async function() {
+      return { base: WIKI_EN, titles: await wikiSearchTitles(WIKI_EN, name + " Indonesia television", name) };
+    },
+    async function() {
+      return { base: WIKI_ID, titles: await wikiSearchTitles(WIKI_ID, name, name) };
+    }
+  ];
+
+  for (const step of steps) {
+    try {
+      const found = await step();
+      for (const title of found.titles) {
+        const url = await wikiLogoFromArticle(found.base, title, name);
+        if (url) return url;
+      }
+    } catch (error) {
+      console.warn("Logo Wikipedia gagal:", name, error);
+    }
+  }
+
+  console.info("Logo Wikipedia tidak ditemukan:", name);
   return "";
 }
 
@@ -579,47 +666,17 @@ async function loadWikipediaLogos() {
   }
   applyFoundLogos(found);
 
-  const missing = cards.filter(function(item) { return !found[item.channel.id]; });
-  if (!missing.length) return;
+  const todo = cards.filter(function(item) {
+    return !found[item.channel.id] && item.channel.noWikipedia !== true;
+  });
 
-  // Tahap 1: pakai judul artikel yang ditulis di Channels.json
-  try {
-    const titled = missing.filter(function(item) { return item.channel.wikipedia; });
-    const byTitle = await wikiLogosByTitle(
-      titled.map(function(item) { return item.channel.wikipedia; })
-    );
-    titled.forEach(function(item) {
-      const url = byTitle[item.channel.wikipedia];
-      if (url) found[item.channel.id] = url;
-    });
-    applyFoundLogos(found);
-  } catch (error) {
-    console.warn("Logo Wikipedia (judul) gagal:", error);
-  }
-
-  // Tahap 2: cari lewat pencarian untuk yang masih kosong
-  for (const item of cards) {
-    if (found[item.channel.id]) continue;
-
-    const name = item.channel.name;
-    const attempts = [
-      [WIKI_EN, name + " Indonesia television"],
-      [WIKI_ID, name + " televisi"]
-    ];
-
-    for (const attempt of attempts) {
-      try {
-        const url = await wikiLogoBySearch(attempt[0], attempt[1], name);
-        if (url) {
-          found[item.channel.id] = url;
-          setLogo(item, [url, item.channel.logo]);
-          break;
-        }
-      } catch (error) {
-        console.warn("Logo Wikipedia (cari) gagal:", name, error);
-      }
+  await Promise.all(todo.map(async function(item) {
+    const url = await findWikipediaLogo(item.channel);
+    if (url) {
+      found[item.channel.id] = url;
+      setLogo(item, [url, item.channel.logo]);
     }
-  }
+  }));
 
   try {
     localStorage.setItem(LOGO_CACHE_KEY, JSON.stringify(found));
