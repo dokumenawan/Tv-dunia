@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "channels": [
     {
       "id": "tvri-nasional",
@@ -7,6 +7,7 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "wikipedia": "TVRI",
       "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
       "sourceUrl": "https://klik.tvri.go.id/",
       "enabled": true
@@ -16,7 +17,8 @@
       "name": "Metro TV",
       "country": "Indonesia",
       "category": "Berita",
-      "logo": "https://upload.wikimedia.org/wikipedia/ms/4/41/New_MetroTV_Logo_and_Slogan_2010.png?utm_source=ms.wikipedia.org&utm_campaign=index&utm_content=original/",
+      "logo": "https://www.google.com/s2/favicons?domain=metrotvnews.com&sz=256",
+      "wikipedia": "Metro TV (Indonesia)",
       "streamUrl": "https://edge.medcom.id/live-edge/smil:metro.smil/playlist.m3u8",
       "sourceUrl": "https://www.metrotvnews.com/",
       "enabled": true
@@ -26,7 +28,7 @@
       "name": "Magna Channel",
       "country": "Indonesia",
       "category": "Nasional",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/1/1d/MagnaChannel.webp?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original",
+      "logo": "https://www.google.com/s2/favicons?domain=medcom.id&sz=256",
       "streamUrl": "https://edge.medcom.id/live-edge/smil:magna.smil/playlist.m3u8",
       "sourceUrl": "https://www.medcom.id/",
       "enabled": true
@@ -47,6 +49,7 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "https://www.google.com/s2/favicons?domain=nusantaratv.com&sz=256",
+      "wikipedia": "Nusantara TV",
       "streamUrl": "https://nusantaratv.siar.us/nusantaratv/live/playlist.m3u8",
       "sourceUrl": "https://www.nusantaratv.com/",
       "enabled": true
@@ -127,6 +130,7 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "https://www.google.com/s2/favicons?domain=rcti.tv&sz=256",
+      "wikipedia": "RCTI",
       "watchUrl": "https://www.rctiplus.com/tv/rcti",
       "sourceUrl": "https://www.rctiplus.com/",
       "enabled": true
@@ -137,6 +141,7 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "https://www.google.com/s2/favicons?domain=sctv.co.id&sz=256",
+      "wikipedia": "SCTV (TV network)",
       "watchUrl": "https://www.vidio.com/live/204-sctv",
       "sourceUrl": "https://www.vidio.com/",
       "enabled": true
@@ -147,6 +152,7 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "https://www.google.com/s2/favicons?domain=indosiar.com&sz=256",
+      "wikipedia": "Indosiar",
       "watchUrl": "https://www.vidio.com/live/205-indosiar",
       "sourceUrl": "https://www.vidio.com/",
       "enabled": true
@@ -157,6 +163,7 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "https://www.google.com/s2/favicons?domain=antvklik.com&sz=256",
+      "wikipedia": "ANTV",
       "watchUrl": "https://www.antvklik.com/livestream",
       "sourceUrl": "https://www.antvklik.com/",
       "enabled": true
@@ -167,6 +174,7 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "https://www.google.com/s2/favicons?domain=mnctv.com&sz=256",
+      "wikipedia": "MNCTV",
       "watchUrl": "https://www.rctiplus.com/tv/mnctv",
       "sourceUrl": "https://www.rctiplus.com/",
       "enabled": true
@@ -177,6 +185,7 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "https://www.google.com/s2/favicons?domain=gtv.id&sz=256",
+      "wikipedia": "GTV (Indonesian TV network)",
       "watchUrl": "https://www.rctiplus.com/tv/gtv",
       "sourceUrl": "https://www.rctiplus.com/",
       "enabled": true
@@ -187,6 +196,7 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "https://www.google.com/s2/favicons?domain=transtv.co.id&sz=256",
+      "wikipedia": "Trans TV",
       "watchUrl": "https://www.transtv.co.id/live",
       "sourceUrl": "https://www.transtv.co.id/",
       "enabled": true
@@ -197,6 +207,7 @@
       "country": "Indonesia",
       "category": "Nasional",
       "logo": "https://www.google.com/s2/favicons?domain=trans7.co.id&sz=256",
+      "wikipedia": "Trans7",
       "watchUrl": "https://www.trans7.co.id/live",
       "sourceUrl": "https://www.trans7.co.id/",
       "enabled": true
@@ -207,6 +218,7 @@
       "country": "Indonesia",
       "category": "Berita",
       "logo": "https://www.google.com/s2/favicons?domain=tvonenews.com&sz=256",
+      "wikipedia": "TvOne",
       "watchUrl": "https://www.tvonenews.com/live",
       "sourceUrl": "https://www.tvonenews.com/",
       "enabled": true
@@ -217,6 +229,7 @@
       "country": "Indonesia",
       "category": "Berita",
       "logo": "https://www.google.com/s2/favicons?domain=kompas.tv&sz=256",
+      "wikipedia": "Kompas TV",
       "watchUrl": "https://www.kompas.tv/live",
       "sourceUrl": "https://www.kompas.tv/",
       "enabled": true
@@ -227,6 +240,7 @@
       "country": "Indonesia",
       "category": "Berita",
       "logo": "https://www.google.com/s2/favicons?domain=inews.id&sz=256",
+      "wikipedia": "INews",
       "watchUrl": "https://www.rctiplus.com/tv/inews",
       "sourceUrl": "https://www.rctiplus.com/",
       "enabled": true
@@ -237,6 +251,7 @@
       "country": "Indonesia",
       "category": "Berita",
       "logo": "https://www.google.com/s2/favicons?domain=cnnindonesia.com&sz=256",
+      "wikipedia": "CNN Indonesia",
       "watchUrl": "https://www.cnnindonesia.com/tv",
       "sourceUrl": "https://www.cnnindonesia.com/",
       "enabled": true
@@ -247,6 +262,7 @@
       "country": "Indonesia",
       "category": "Berita",
       "logo": "https://www.google.com/s2/favicons?domain=cnbcindonesia.com&sz=256",
+      "wikipedia": "CNBC Indonesia",
       "watchUrl": "https://www.cnbcindonesia.com/tv",
       "sourceUrl": "https://www.cnbcindonesia.com/",
       "enabled": true
