@@ -420,6 +420,37 @@ async function fetchChannelData() {
   throw new Error(problems.join(" | "));
 }
 
+/* ====== Logo ====== */
+function setLogo(item, urls) {
+  const list = urls.filter(Boolean);
+  const logo = item.logoEl;
+
+  function showName() {
+    logo.replaceChildren(document.createTextNode(item.channel.name));
+  }
+
+  if (!list.length) {
+    showName();
+    return;
+  }
+
+  let index = 0;
+  const img = document.createElement("img");
+  img.alt = item.channel.name;
+  img.loading = "lazy";
+  img.referrerPolicy = "no-referrer";
+  img.addEventListener("error", function() {
+    index += 1;
+    if (index < list.length) {
+      img.src = list[index];
+    } else {
+      showName();
+    }
+  });
+  img.src = list[0];
+  logo.replaceChildren(img);
+}
+
 function buildCard(channel) {
   const card = document.createElement("button");
   card.type = "button";
@@ -427,22 +458,6 @@ function buildCard(channel) {
 
   const logo = document.createElement("div");
   logo.className = "logo";
-
-  function showNameAsLogo() {
-    logo.replaceChildren(document.createTextNode(channel.name));
-  }
-
-  if (channel.logo) {
-    const img = document.createElement("img");
-    img.src = channel.logo;
-    img.alt = channel.name;
-    img.loading = "lazy";
-    img.referrerPolicy = "no-referrer";
-    img.addEventListener("error", showNameAsLogo);
-    logo.appendChild(img);
-  } else {
-    showNameAsLogo();
-  }
 
   const name = document.createElement("strong");
   name.textContent = channel.name;
@@ -462,7 +477,155 @@ function buildCard(channel) {
     playChannel(channel);
   });
 
-  return card;
+  setLogo({ channel: channel, logoEl: logo }, [channel.logo]);
+
+  return { element: card, logoEl: logo };
+}
+
+/* ====== Logo dari Wikipedia (diambil langsung oleh browser) ====== */
+const WIKI_EN = "https://en.wikipedia.org/w/api.php";
+const WIKI_ID = "https://id.wikipedia.org/w/api.php";
+const LOGO_CACHE_KEY = "tvdunia.wikilogos.v1";
+
+function wikiUrl(base, extra) {
+  const params = new URLSearchParams(Object.assign({
+    action: "query",
+    format: "json",
+    origin: "*",
+    prop: "pageimages",
+    piprop: "thumbnail",
+    pithumbsize: "256",
+    pilicense: "any"
+  }, extra));
+  return base + "?" + params.toString();
+}
+
+async function wikiJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("HTTP " + response.status);
+  }
+  return response.json();
+}
+
+function compact(text) {
+  return String(text || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+// Ambil gambar utama artikel berdasarkan judul. Hasil: { judul: urlGambar }
+async function wikiLogosByTitle(titles) {
+  const result = {};
+  if (!titles.length) return result;
+
+  const data = await wikiJson(
+    wikiUrl(WIKI_EN, { titles: titles.join("|"), redirects: "1" })
+  );
+  const query = data.query || {};
+
+  const alias = {};
+  (query.normalized || []).forEach(function(item) { alias[item.from] = item.to; });
+  (query.redirects || []).forEach(function(item) { alias[item.from] = item.to; });
+
+  const finalImages = {};
+  Object.values(query.pages || {}).forEach(function(page) {
+    if (page.thumbnail && page.thumbnail.source) {
+      finalImages[page.title] = page.thumbnail.source;
+    }
+  });
+
+  titles.forEach(function(title) {
+    let finalTitle = title;
+    if (alias[finalTitle]) finalTitle = alias[finalTitle];
+    if (alias[finalTitle]) finalTitle = alias[finalTitle];
+    if (finalImages[finalTitle]) result[title] = finalImages[finalTitle];
+  });
+
+  return result;
+}
+
+// Cadangan: cari artikel lewat pencarian, terima hanya jika judulnya cocok dengan nama channel
+async function wikiLogoBySearch(base, queryText, channelName) {
+  const data = await wikiJson(
+    wikiUrl(base, { generator: "search", gsrsearch: queryText, gsrlimit: "5" })
+  );
+  const pages = Object.values((data.query || {}).pages || {});
+  pages.sort(function(a, b) { return (a.index || 0) - (b.index || 0); });
+
+  const wanted = compact(channelName);
+  for (const page of pages) {
+    if (page.thumbnail && page.thumbnail.source && compact(page.title).includes(wanted)) {
+      return page.thumbnail.source;
+    }
+  }
+  return "";
+}
+
+function applyFoundLogos(found) {
+  cards.forEach(function(item) {
+    const url = found[item.channel.id];
+    if (url) {
+      setLogo(item, [url, item.channel.logo]);
+    }
+  });
+}
+
+async function loadWikipediaLogos() {
+  const found = {};
+
+  try {
+    Object.assign(found, JSON.parse(localStorage.getItem(LOGO_CACHE_KEY) || "{}"));
+  } catch (error) {
+    // abaikan jika penyimpanan tidak tersedia
+  }
+  applyFoundLogos(found);
+
+  const missing = cards.filter(function(item) { return !found[item.channel.id]; });
+  if (!missing.length) return;
+
+  // Tahap 1: pakai judul artikel yang ditulis di Channels.json
+  try {
+    const titled = missing.filter(function(item) { return item.channel.wikipedia; });
+    const byTitle = await wikiLogosByTitle(
+      titled.map(function(item) { return item.channel.wikipedia; })
+    );
+    titled.forEach(function(item) {
+      const url = byTitle[item.channel.wikipedia];
+      if (url) found[item.channel.id] = url;
+    });
+    applyFoundLogos(found);
+  } catch (error) {
+    console.warn("Logo Wikipedia (judul) gagal:", error);
+  }
+
+  // Tahap 2: cari lewat pencarian untuk yang masih kosong
+  for (const item of cards) {
+    if (found[item.channel.id]) continue;
+
+    const name = item.channel.name;
+    const attempts = [
+      [WIKI_EN, name + " Indonesia television"],
+      [WIKI_ID, name + " televisi"]
+    ];
+
+    for (const attempt of attempts) {
+      try {
+        const url = await wikiLogoBySearch(attempt[0], attempt[1], name);
+        if (url) {
+          found[item.channel.id] = url;
+          setLogo(item, [url, item.channel.logo]);
+          break;
+        }
+      } catch (error) {
+        console.warn("Logo Wikipedia (cari) gagal:", name, error);
+      }
+    }
+  }
+
+  try {
+    localStorage.setItem(LOGO_CACHE_KEY, JSON.stringify(found));
+  } catch (error) {
+    // abaikan jika penyimpanan tidak tersedia
+  }
 }
 
 async function loadChannels() {
@@ -488,10 +651,12 @@ async function loadChannels() {
     }
 
     channels.forEach(function(channel) {
-      const element = buildCard(channel);
-      cards.push({ channel: channel, element: element });
-      listEl.appendChild(element);
+      const built = buildCard(channel);
+      cards.push({ channel: channel, element: built.element, logoEl: built.logoEl });
+      listEl.appendChild(built.element);
     });
+
+    loadWikipediaLogos();
 
   } catch (error) {
     console.error("Gagal memuat daftar channel:", error);
