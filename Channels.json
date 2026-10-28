@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 6,
   "channels": [
     {
       "id": "tvri-nasional",
@@ -18,7 +18,7 @@
       "country": "Indonesia",
       "category": "Berita",
       "logo": "https://www.google.com/s2/favicons?domain=metrotvnews.com&sz=256",
-      "wikipedia": "Metro TV (Indonesia)",
+      "wikipedia": "Metro TV (Indonesian TV network)",
       "streamUrl": "https://edge.medcom.id/live-edge/smil:metro.smil/playlist.m3u8",
       "sourceUrl": "https://www.metrotvnews.com/",
       "enabled": true
@@ -31,17 +31,19 @@
       "logo": "https://www.google.com/s2/favicons?domain=medcom.id&sz=256",
       "streamUrl": "https://edge.medcom.id/live-edge/smil:magna.smil/playlist.m3u8",
       "sourceUrl": "https://www.medcom.id/",
-      "enabled": true
+      "enabled": true,
+      "wikipedia": "Magna Channel"
     },
     {
       "id": "metro-globe-network",
       "name": "Metro Globe Network",
       "country": "Indonesia",
       "category": "Berita",
-      "logo": "https://www.google.com/s2/favicons?domain=medcom.id&sz=256",
+      "logo": "",
       "streamUrl": "https://edge.medcom.id/live-edge/smil:mgnch.smil/playlist.m3u8",
       "sourceUrl": "https://www.medcom.id/",
-      "enabled": true
+      "enabled": true,
+      "noWikipedia": true
     },
     {
       "id": "nusantaratv-nasional",
@@ -144,7 +146,8 @@
       "wikipedia": "SCTV (TV network)",
       "watchUrl": "https://www.vidio.com/live/204-sctv",
       "sourceUrl": "https://www.vidio.com/",
-      "enabled": true
+      "enabled": true,
+      "wikiFile": "File:SCTV Logo.svg"
     },
     {
       "id": "indosiar",
