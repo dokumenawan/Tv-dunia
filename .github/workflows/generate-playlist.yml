@@ -1,0 +1,35 @@
+
+name: Generate M3U Playlist
+
+on:
+  push:
+    paths:
+      - 'Channels.json'
+      - 'generate_playlist.py'
+      - '.github/workflows/generate-playlist.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Generate playlist
+        run: python generate_playlist.py
+
+      - name: Save playlist
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'Update generated M3U playlist'
+          file_pattern: playlist.m3u
