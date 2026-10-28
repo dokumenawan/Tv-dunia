@@ -543,13 +543,13 @@ function pickLogoFile(files, channelName) {
     if (!wanted || !name.includes(wanted)) return;
 
     let score = 4;
-    if (name.includes("logo")) score += 1;
+    if (name.includes("logo")) score += 2;
     if (/\.svg$/i.test(base)) score += 1;
     if (WEAK_FILE.test(base)) score -= 2;
 
     const years = base.match(/(19|20)\d\d/g);
     if (years) {
-      score += (Math.max.apply(null, years.map(Number)) - 1990) / 8;
+      score += (Math.max.apply(null, years.map(Number)) - 1990) / 100;
     }
 
     if (score > bestScore) {
@@ -573,7 +573,46 @@ async function wikiFileUrl(base, fileTitle) {
   return info ? (info.thumburl || info.url || "") : "";
 }
 
+// Ambil nama file logo dari parameter "logo" di infobox artikel (paling akurat)
+async function wikiInfoboxLogoFile(base, title) {
+  const data = await wikiJson(wikiUrl(base, {
+    prop: "revisions",
+    rvprop: "content",
+    rvslots: "main",
+    formatversion: "2",
+    redirects: "1",
+    titles: title
+  }));
+  const page = ((data.query || {}).pages || [])[0];
+  const text = page && page.revisions && page.revisions[0] &&
+    page.revisions[0].slots && page.revisions[0].slots.main &&
+    page.revisions[0].slots.main.content;
+  if (!text) return "";
+
+  const match = text.match(/\|\s*logo\s*=\s*([^\n]*(?:\n(?!\s*\|)[^\n]*)*)/i);
+  if (!match) return "";
+
+  const names = match[1].match(/[^\n=|\[\]{}:]+\.(?:svg|png|jpg|jpeg|webp)/gi);
+  if (!names || !names.length) return "";
+
+  const picked = names[names.length - 1].trim();
+  return picked ? "File:" + picked : "";
+}
+
 async function wikiLogoFromArticle(base, title, channelName) {
+  try {
+    const infoboxFile = await wikiInfoboxLogoFile(base, title);
+    if (infoboxFile) {
+      const infoboxUrl = await wikiFileUrl(base, infoboxFile);
+      if (infoboxUrl) {
+        console.info("Logo Wikipedia (infobox):", channelName, "->", title, "->", infoboxFile);
+        return infoboxUrl;
+      }
+    }
+  } catch (error) {
+    console.warn("Infobox logo gagal:", channelName, error);
+  }
+
   const data = await wikiJson(wikiUrl(base, {
     prop: "images",
     imlimit: "500",
