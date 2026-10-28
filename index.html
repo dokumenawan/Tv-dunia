@@ -448,10 +448,17 @@ function buildCard(channel) {
   name.textContent = channel.name;
 
   const detail = document.createElement("small");
-  detail.textContent = [channel.country, channel.category].filter(Boolean).join(" · ");
+  const isLinkOnly = !channel.streamUrl && !!channel.watchUrl;
+  detail.textContent =
+    [channel.country, channel.category].filter(Boolean).join(" · ") +
+    (isLinkOnly ? " · Situs resmi ↗" : "");
 
   card.append(logo, name, detail);
   card.addEventListener("click", function() {
+    if (isLinkOnly) {
+      window.open(channel.watchUrl, "_blank", "noopener");
+      return;
+    }
     playChannel(channel);
   });
 
