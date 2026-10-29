@@ -8,6 +8,7 @@ https://sw.run/CAMPWIKI_INEWS
 #EXTVLCOPT:http-user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
 #EXTVLCOPT:http-referrer=https://www.visionplus.id/
 #KODIPROP:inputstream.adaptive.license_type=com.widevine.alpha
+#KODIPROP:inputstream.adaptive.license_key=https://vision.mikrofast.web.id/license?id=5
 https://d43tg978oium5.cloudfront.net/out/v1/8c2df39f9b2842fbb997b89378841ad9/index.mpd
 
 #EXTINF:-1 tvg-id="TVRI.id" tvg-name="TVRI HD" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/indonesia/tvri-id.png?raw=true" group-title="BERITA",TVRI HD
@@ -44,6 +45,7 @@ http://op-flashcon-digdayahd-1.dens.tv/h/h12/index.m3u8?app_type=web&userid=lite
 #EXTINF:-1 tvg-id="MetroTV.id" tvg-name="METRO TV" tvg-logo="https://i.imgur.com/arkyYuP.png" group-title="BERITA",METRO TV
 #EXTVLCOPT:http-user-agent=VidioPlayer/6.41.11
 #KODIPROP:inputstream.adaptive.license_type=com.widevine.alpha
+#KODIPROP:inputstream.adaptive.license_key=https://nextgenz.my.id/event/pidio/play.mpd?id=777&type=drm
 https://nextgenz.my.id/event/pidio/play.mpd?id=777&type=dash
 
 #EXTINF:-1 tvg-id="BTV.id" tvg-name="BTV" tvg-logo="https://i.ibb.co.com/HXrk8wY/btv.png" group-title="BERITA",BTV
@@ -149,6 +151,7 @@ https://op-flashcon-digdayahd-1.dens.tv/h/h207/index2.m3u8
 
 #EXTINF:-1 tvg-id="VisionPrime.id" tvg-name="VISION PRIME +" tvg-logo="https://i.imgur.com/FJnXWQq.png" group-title="ENTERTAINMENT & LIFESTYLE",VISION PRIME +
 #KODIPROP:inputstream.adaptive.license_type=com.widevine.alpha
+#KODIPROP:inputstream.adaptive.license_key=https://vision.mikrofast.web.id/license?id=87
 #EXTVLCOPT:http-referrer=https://www.visionplus.id/
 #EXTVLCOPT:http-origin=https://www.visionplus.id/
 #EXTVLCOPT:http-user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
@@ -158,15 +161,18 @@ https://d43tg978oium5.cloudfront.net/out/v1/873c24d3946048f68e459250f1d2fd98/ind
 #EXTVLCOPT:http-user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleCoreMedia/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
 #KODIPROP:inputstream.adaptive.manifest_type=dash
 #KODIPROP:inputstream.adaptive.license_type=clearkey
+#KODIPROP:inputstream.adaptive.license_key=https://sports.inisemar.my.id/ck.php?id=indosiar
 https://vidsemar.pages.dev/terraluna3/205.mpd
 
 #EXTINF:-1 tvg-id="Ent.id" tvg-name="INSERT" tvg-logo="https://i.imgur.com/bbydins.png" group-title="ENTERTAINMENT & LIFESTYLE",INSERT
 #KODIPROP:inputstream.adaptive.stream_headers=User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64)&Origin=https://www.cubmu.com&Referer=https://www.cubmu.com/
 #KODIPROP:inputstream.adaptive.license_type=org.w3.clearkey
+#KODIPROP:inputstream.adaptive.license_key=6ffb9c53af284fd590217ede1eba765e:4abf1fd26e8c45a5b6bae60cf6ffc2b9
 https://cdnjktbpid26.cubmu.com/epyctx01-aaf7e583a80211de0b2b2f9dcbed0bf9/dash/330-aW5zZXJ0LWNoLXNjdGUzNQ/live.mpd?signature=MzM1NmY5NzkyZDc3MGI5YmNkNmIzZmYwZmM4OWVhYjc=&time=77777777777&device_id=oTUsDpAKOAeq_K-iY9vGfhiqWorUVlGQ4rLTsogqNAVNXXz3Qw
 
 #EXTINF:-1 tvg-id="CelebritiesTV.id" tvg-name="CELEBRITIES +" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/67/Celebrities_TV.png" group-title="ENTERTAINMENT & LIFESTYLE",CELEBRITIES +
 #KODIPROP:inputstream.adaptive.license_type=com.widevine.alpha
+#KODIPROP:inputstream.adaptive.license_key=https://vision.mikrofast.web.id/license?id=88
 #EXTVLCOPT:http-referrer=https://www.visionplus.id/
 #EXTVLCOPT:http-origin=https://www.visionplus.id/
 #EXTVLCOPT:http-user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
@@ -184,6 +190,7 @@ http://202.150.161.212:5000/live/channel35/playlist.m3u8
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.0.0
 #EXTVLCOPT:http-referrer=https://www.visionplus.id/
 #KODIPROP:inputstream.adaptive.license_type=com.widevine.alpha
+#KODIPROP:inputstream.adaptive.license_key=https://vision.mikrofast.web.id/license?id=50
 https://d3b0v7fggu5zwm.cloudfront.net/out/v1/65432a4c12ca4a52abf473a0e41d7c7e/index.mpd
 
 #EXTINF:-1 tvg-id="mqtv" tvg-name="MQTV" tvg-logo="https://upload.wikimedia.org/wikipedia/id/8/81/Logo_MQTV.png" group-title="RELIGION TV MUSLIM",MQTV
@@ -220,6 +227,7 @@ https://e.siar.us/live/tvmu.m3u8
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64)
 #EXTVLCOPT:http-referrer=https://www.visionplus.id/
 #KODIPROP:inputstream.adaptive.license_type=com.widevine.alpha
+#KODIPROP:inputstream.adaptive.license_key=https://dusk.biz.id/rpl/drm.php?id=137
 https://d2gr3zenqo3tg4.cloudfront.net/out/v1/a8f14e34c687494fb1454b88742db085/index.mpd
 
 #EXTINF:-1 tvg-id="brtv" tvg-name="BRTV" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyd07oJztnvndumUgIGcPNCRMwuf9MryNvMrv2vG1hzQ&s=10" group-title="RELIGION TV MUSLIM",BRTV
