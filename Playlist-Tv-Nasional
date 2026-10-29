@@ -1,1 +1,34 @@
 
+#EXTM3U
+#EXTINF:-1 tvg-id="tvri-nasional" tvg-name="TVRI" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/indonesia/tvri-id.png?raw=true" group-title="Nasional",TVRI
+https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8
+#EXTINF:-1 tvg-id="metro-tv" tvg-name="Metro TV" tvg-logo="https://i.imgur.com/arkyYuP.png" group-title="Berita",Metro TV
+https://edge.medcom.id/live-edge/smil:metro.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="nusantaratv-nasional" tvg-name="Nusantara TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3f/Nusantara_TV.png" group-title="Nasional",Nusantara TV
+https://nusantaratv.siar.us/nusantaratv/live/playlist.m3u8
+#EXTINF:-1 tvg-id="u-channel" tvg-name="U Channel" tvg-logo="https://www.google.com/s2/favicons?domain=u-channel.tv&sz=256" group-title="Nasional",U Channel
+https://srs.u-channel.tv/live/uchannel-tv.m3u8
+#EXTINF:-1 tvg-id="garuda-tv" tvg-name="Garuda TV" tvg-logo="https://i.imgur.com/WZQfjmC.png" group-title="Nasional",Garuda TV
+https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8
+#EXTINF:-1 tvg-id="abtv-blitar" tvg-name="ABTV Blitar" tvg-logo="" group-title="Daerah",ABTV Blitar
+https://5bf7b725107e5.streamlock.net/abtv/abtv/playlist.m3u8
+#EXTINF:-1 tvg-id="bms-tv" tvg-name="BMS TV" tvg-logo="" group-title="Daerah",BMS TV
+https://5bf7b725107e5.streamlock.net/bmstv/bmstv/playlist.m3u8
+#EXTINF:-1 tvg-id="astha-tv" tvg-name="Astha TV" tvg-logo="" group-title="Daerah",Astha TV
+https://hgmtv.com:2020/hls/asthalive/576p.m3u8
+#EXTINF:-1 tvg-id="tatv" tvg-name="TATV" tvg-logo="https://web.tatv.co.id/wp-content/uploads/2023/04/logotatv.png" group-title="Daerah",TATV
+https://tatv.siar.us/tatv/live.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="banjar-tv" tvg-name="Banjar TV" tvg-logo="" group-title="Daerah",Banjar TV
+https://banjartv.siar.us/banjartv/live/playlist.m3u8
+#EXTINF:-1 tvg-id="duta-tv" tvg-name="Duta TV" tvg-logo="" group-title="Daerah",Duta TV
+https://dutatv.siar.us/dutatv/live/playlist.m3u8
+#EXTINF:-1 tvg-id="mqtv" tvg-name="MQTV" tvg-logo="https://upload.wikimedia.org/wikipedia/id/8/81/Logo_MQTV.png" group-title="Religi",MQTV
+https://5bf7b725107e5.streamlock.net/mqtv/mqtv/playlist.m3u8
+#EXTINF:-1 tvg-id="tv9-nu" tvg-name="TV9 NU" tvg-logo="" group-title="Religi",TV9 NU
+https://5bf7b725107e5.streamlock.net/tv9/tv9/playlist.m3u8
+#EXTINF:-1 tvg-id="brtv" tvg-name="BRTV" tvg-logo="" group-title="Religi",BRTV
+https://5bf7b725107e5.streamlock.net/brtv/brtv/playlist.m3u8
+#EXTINF:-1 tvg-id="madani-tv" tvg-name="Madani TV" tvg-logo="" group-title="Religi",Madani TV
+https://stream.asianastream.com/madani/madanitv.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="tvmu" tvg-name="TVMu" tvg-logo="" group-title="Religi",TVMu
+https://e.siar.us/live/tvmu.m3u8
