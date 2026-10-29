@@ -289,6 +289,306 @@
       "streamUrl": "https://stream.jogjatv.co.id/jtvlive/stream/index.m3u8",
       "sourceUrl": "https://www.jogjatv.co.id/live-streaming/",
       "enabled": false
+    },
+    {
+      "id": "tvri-jakarta",
+      "name": "TVRI Jakarta",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/DKI/hls/DKI.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-nusa-tenggara-barat",
+      "name": "TVRI Nusa Tenggara Barat",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/NTB/hls/NTB.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-nusa-tenggara-timur",
+      "name": "TVRI Nusa Tenggara Timur",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/NTT/hls/NTT.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-papua",
+      "name": "TVRI Papua",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Papua/hls/Papua.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-papua-barat",
+      "name": "TVRI Papua Barat",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Pabar/hls/Pabar.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-riau",
+      "name": "TVRI Riau",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Riau/hlstl/Riau.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-sulawesi-barat",
+      "name": "TVRI Sulawesi Barat",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Sulbar/hls/Sulbar.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-sulawesi-selatan",
+      "name": "TVRI Sulawesi Selatan",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Sulsel/hls/Sulsel.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-sulawesi-tengah",
+      "name": "TVRI Sulawesi Tengah",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Sulteng/hls/Sulteng.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-sulawesi-utara",
+      "name": "TVRI Sulawesi Utara",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Sulut/hls/Sulut.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-sumatera-barat",
+      "name": "TVRI Sumatera Barat",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Sumbar/hls/Sumbar.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-sumatera-selatan",
+      "name": "TVRI Sumatera Selatan",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Sumsel/hls/Sumsel.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-sumatera-utara",
+      "name": "TVRI Sumatera Utara",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Sumut/hls/Sumut.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "tvri-yogyakarta",
+      "name": "TVRI Yogyakarta",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://www.google.com/s2/favicons?domain=tvri.go.id&sz=256",
+      "streamUrl": "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta/hls/Jogjakarta.m3u8",
+      "sourceUrl": "https://klik.tvri.go.id/",
+      "enabled": true
+    },
+    {
+      "id": "abtv-blitar",
+      "name": "ABTV Blitar",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://5bf7b725107e5.streamlock.net/abtv/abtv/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "bms-tv",
+      "name": "BMS TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://5bf7b725107e5.streamlock.net/bmstv/bmstv/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "astha-tv",
+      "name": "Astha TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://hgmtv.com:2020/hls/asthalive/576p.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "tatv",
+      "name": "TATV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "https://web.tatv.co.id/wp-content/uploads/2023/04/logotatv.png",
+      "streamUrl": "https://tatv.siar.us/tatv/live.sdp/playlist.m3u8",
+      "sourceUrl": "https://web.tatv.co.id/",
+      "enabled": true
+    },
+    {
+      "id": "banjar-tv",
+      "name": "Banjar TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://banjartv.siar.us/banjartv/live/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "duta-tv",
+      "name": "Duta TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "https://dutatv.siar.us/dutatv/live/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "mqtv",
+      "name": "MQTV",
+      "country": "Indonesia",
+      "category": "Religi",
+      "logo": "https://upload.wikimedia.org/wikipedia/id/8/81/Logo_MQTV.png",
+      "streamUrl": "https://5bf7b725107e5.streamlock.net/mqtv/mqtv/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "tv9-nu",
+      "name": "TV9 NU",
+      "country": "Indonesia",
+      "category": "Religi",
+      "logo": "",
+      "streamUrl": "https://5bf7b725107e5.streamlock.net/tv9/tv9/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "brtv",
+      "name": "BRTV",
+      "country": "Indonesia",
+      "category": "Religi",
+      "logo": "",
+      "streamUrl": "https://5bf7b725107e5.streamlock.net/brtv/brtv/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "madani-tv",
+      "name": "Madani TV",
+      "country": "Indonesia",
+      "category": "Religi",
+      "logo": "",
+      "streamUrl": "https://stream.asianastream.com/madani/madanitv.smil/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "tvmu",
+      "name": "TVMu",
+      "country": "Indonesia",
+      "category": "Religi",
+      "logo": "",
+      "streamUrl": "https://e.siar.us/live/tvmu.m3u8",
+      "sourceUrl": "",
+      "enabled": true
+    },
+    {
+      "id": "bandung-tv",
+      "name": "Bandung TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "http://202.150.153.254:65500/bandungtvWEBSITE.m3u8",
+      "sourceUrl": "",
+      "enabled": false
+    },
+    {
+      "id": "jtv-kediri",
+      "name": "JTV Kediri",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "http://122.248.43.242:1935/JTVKEDIRI/_definst_/myStream/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": false
+    },
+    {
+      "id": "jawa-pos-tv",
+      "name": "Jawa Pos TV",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "http://122.248.43.242:1935/JAWAPOSTVJKT/_definst_/myStream/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": false
+    },
+    {
+      "id": "stv-samarinda",
+      "name": "STV Samarinda",
+      "country": "Indonesia",
+      "category": "Daerah",
+      "logo": "",
+      "streamUrl": "http://122.248.43.242:1935/SAMARINDATV/_definst_/myStream/playlist.m3u8",
+      "sourceUrl": "",
+      "enabled": false
+    },
+    {
+      "id": "nabawi-tv",
+      "name": "Nabawi TV",
+      "country": "Indonesia",
+      "category": "Religi",
+      "logo": "https://upload.wikimedia.org/wikipedia/id/1/15/Logo_Nabawi_TV.png",
+      "streamUrl": "http://202.150.161.117:8000/play/NabawiTV",
+      "sourceUrl": "",
+      "enabled": false
     }
   ]
 }
