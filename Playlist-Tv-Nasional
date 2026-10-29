@@ -32,3 +32,15 @@ https://5bf7b725107e5.streamlock.net/brtv/brtv/playlist.m3u8
 https://stream.asianastream.com/madani/madanitv.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="tvmu" tvg-name="TVMu" tvg-logo="" group-title="Religi",TVMu
 https://e.siar.us/live/tvmu.m3u8
+#EXTINF:-1 tvg-id="Moji" group-title="ENTERTAINMENT & LIFESTYLE" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/indonesia/moji-id.png?raw=true", MOJI |D|
+#EXTVLCOPT:http-referrer=http://www.dens.tv/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36
+http://op-flashcon-digdayahd-1.dens.tv/h/h207/index.m3u8?app_type=web&userid=lite&chname=Moji
+
+#EXTINF:-1 tvg-id="Moji" group-title="ENTERTAINMENT & LIFESTYLE" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/indonesia/moji-id.png?raw=true", MOJI |D2|
+#EXTVLCOPT:http-user-agent="ExoPlayerDemo/2.15.1 (Linux; Android 13) ExoPlayerLib/2.15.1"
+https://op-flashcon-digdayahd-1.dens.tv/h/h207/index2.m3u8
+
+##EXTINF:-1 tvg-id="Moji" group-title="ENTERTAINMENT & LIFESTYLE" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/indonesia/moji-id.png?raw=true", MOJI|®|
+https://ogietv.biz.id:443/Livetv/234/25163.ts
+#http://013tv.com:8080/F33848/cbd9779b/298550
